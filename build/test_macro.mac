@@ -1,0 +1,12 @@
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/score/ntuple/writerVerbose 0
+
+/process/had/rdm/thresholdForVeryLongDecayTime 1.0e+6 year
+
+
+/run/beamOn 5000
+#/control/execute vis100.mac
+

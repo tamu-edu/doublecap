@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../ntransporter"
+		},
+		{
+			"path": "../../../../Geant4-10"
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"statusBar.background": "#ad0404"
+		},
+		"terminal.integrated.cwd": "/Users/ajbiffl/Documents/CDMS/defects/doublecap/build",
+		"editor.rulers": [
+		80
+		],
+		"python.languageServer": "None"
+	}
+}

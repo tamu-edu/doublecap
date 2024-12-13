@@ -1,0 +1,56 @@
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+
+/run/initialize
+
+
+/vis/open OGL 600x600-0+0
+
+#/vis/viewer/set/autoRefresh false
+/vis/verbose 0
+
+/vis/drawVolume
+
+
+/vis/viewer/set/style wireframe
+/vis/viewer/set/lineSegmentsPerCircle 100
+#/vis/viewer/set/auxiliaryEdge true
+
+
+#/vis/set/textColour white
+#/vis/set/textLayout right
+#/vis/scene/add/text2D 0.9 -.9 24 ! ! geom
+# or, if your system does not support right-adjustment
+#/vis/scene/add/text2D 0 -.9 24 ! ! exampleB1
+#/vis/set/textLayout    # Revert to normal (left adjusted) layout
+#/vis/set/textColour    # Revert to default text colour (blue)
+#
+
+#/vis/scene/add/scale   # Simple scale line
+
+
+
+#/vis/scene/add/axes -2.5 0 0 2.5 cm
+
+#/vis/viewer/zoom 5
+
+/vis/viewer/set/viewpointVector 0 -1 0
+/vis/viewer/set/upVector 0 0 1
+/vis/ogl/set/printFilename scene_side.pdf
+/vis/ogl/export
+
+
+/vis/viewer/set/viewpointVector 0 0 1
+/vis/viewer/set/upVector 0 1 0
+/vis/ogl/set/printFilename scene_top.pdf
+/vis/ogl/export
+
+
+/vis/viewer/set/viewpointVector -1 -1 0.5
+/vis/viewer/set/upVector 0 0 1
+/vis/geometry/set/lineWidth all 0 1
+/vis/viewer/flush
+/vis/ogl/set/printFilename scene_angle.pdf
+/vis/ogl/export

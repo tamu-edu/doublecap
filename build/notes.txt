@@ -1,0 +1,18 @@
+
+
+- half life of excited state of Si-29 is ~0.84 fs (Si-28 after immediately after capture)
+
+
+time savers:
+- we can kill all gammas below Sn for Si29, but not above
+- score (maybe even importance bias) outer volumes
+- can cut out fraction of solid angle that points away from detector
+
+
+
+
+new conda thing:
+
+new env
+
+conda install -c conda-forge scipy matplotlib root
