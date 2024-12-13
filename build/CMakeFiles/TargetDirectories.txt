@@ -1,5 +1,0 @@
-/Users/ajbiffl/Documents/CDMS/defects/doublecap/build/CMakeFiles/edit_cache.dir
-/Users/ajbiffl/Documents/CDMS/defects/doublecap/build/CMakeFiles/rebuild_cache.dir
-/Users/ajbiffl/Documents/CDMS/defects/doublecap/build/src/CMakeFiles/doublecap.dir
-/Users/ajbiffl/Documents/CDMS/defects/doublecap/build/src/CMakeFiles/edit_cache.dir
-/Users/ajbiffl/Documents/CDMS/defects/doublecap/build/src/CMakeFiles/rebuild_cache.dir

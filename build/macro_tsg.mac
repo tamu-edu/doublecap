@@ -1,8 +1,0 @@
-/run/initialize
-/vis/open TSG_OFFSCREEN 600x600
-/vis/drawVolume
-/vis/viewer/set/viewpointVector 1 2 3
-/vis/viewer/set/upVector 0 0 1
-/vis/geometry/set/lineWidth all -1 5
-/vis/tsg/offscreen/set/file auto tsg_geom
-/vis/viewer/rebuild
