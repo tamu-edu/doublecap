@@ -45,7 +45,7 @@ G4VPhysicalVolume* HousingDetector::Construct() {
     G4Material *cu = G4NistManager::Instance()->FindOrBuildMaterial("G4_Cu");
     G4Material *air = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic"); // G4_AIR
 
-    if (verbosity > 0) {
+    if (verbosity > 1) {
         G4cout << "got materials" << G4endl;
     }
 
@@ -54,7 +54,10 @@ G4VPhysicalVolume* HousingDetector::Construct() {
     box_halfheight = hm_offset + hm_thick/2. + airgap_thick;
     box_halfwidth = hm_diameter/2. + airgap_thick;
 
-
+    if (verbosity > 0) {
+        G4cout << "box_halfheight = " << box_halfheight/cm << " cm" << G4endl;
+        G4cout << "box_halfwidth = " << box_halfwidth/cm << " cm" << G4endl;
+    }
 
     //highmass1 = new HousingDetector(G4ThreeVector(0.,0.,hm_offset), hm_diameter, hm_thick, cu_thick, airgap_thick, 'c', worldLogical, "highmass1");
     //highmass2 = new HousingDetector(G4ThreeVector(0.,0.,-hm_offset), hm_diameter, hm_thick, cu_thick, airgap_thick, 'c', worldLogical, "highmass2");
@@ -82,7 +85,7 @@ G4VPhysicalVolume* HousingDetector::Construct() {
     hmLV = new G4LogicalVolume(hm1, bulk, "hmLV");
 
 
-    if (verbosity > 0) {
+    if (verbosity > 1) {
         G4cout << "defined all LVs" << G4endl;
     }
 
@@ -93,7 +96,7 @@ G4VPhysicalVolume* HousingDetector::Construct() {
     new G4PVPlacement(0, G4ThreeVector(0., 0., hm_offset), hmLV, "highmass1", airgapLV, false, 0, overlaps);
     new G4PVPlacement(0, G4ThreeVector(0., 0., -hm_offset), hmLV, "highmass2", airgapLV, false, 0, overlaps);
     
-    if (verbosity > 0) {
+    if (verbosity > 1) {
         G4cout << "placed almost all LVs" << G4endl;
     }
     return new G4PVPlacement(0, origin, lmLV, "lowmass", airgapLV, false, 0, overlaps);
@@ -117,15 +120,15 @@ G4VPhysicalVolume* SourceBlock::Construct() {
     G4Material *cf = G4NistManager::Instance()->FindOrBuildMaterial("G4_Cf");
     G4Material *pb = G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb");
 
-    G4Box *leadbox = new G4Box("lead",\ 
+    G4Box *leadbox = new G4Box("lead",\
             swidth/2. + pbthickness, 
             swidth/2. + pbthickness, 
             swidth/2. + pbthickness);
-    G4Box *sourcebox = new G4Box("source",\ 
+    G4Box *sourcebox = new G4Box("source",\
             swidth/2., swidth/2., sthick/2.);
 
 
-    if (verbosity > 0) {
+    if (verbosity > 1) {
         G4cout << "defined source boxes" << G4endl;
     }
 
@@ -133,18 +136,18 @@ G4VPhysicalVolume* SourceBlock::Construct() {
     sourceLogical = new G4LogicalVolume(sourcebox, cf, "source");
 
 
-    if (verbosity > 0) {
+    if (verbosity > 1) {
         G4cout << "defined source LVs" << G4endl;
     }
 
-    new G4PVPlacement(0, center, leadLogical, "lead",\ 
+    new G4PVPlacement(0, center, leadLogical, "lead",\
             motherLogical, false, 0, overlaps);
 
-    if (verbosity > 0) {
+    if (verbosity > 1) {
         G4cout << "placed lead" << G4endl;
     }
 
-    return new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), sourceLogical, "source",\ 
+    return new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), sourceLogical, "source",\
             leadLogical, false, 0, overlaps);
 }
 
