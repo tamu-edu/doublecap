@@ -39,7 +39,18 @@
 #include "DCUtilities.hh"
 #include "DCGeometry.hh"
 
+
+const G4bool RANDOMIZE = false;
+
 int main(int argc, char *argv[]) {
+
+    if (RANDOMIZE) {
+        auto SEED = time(nullptr);
+        CLHEP::HepRandom::setTheSeed(SEED);
+        G4cout << "RANDOMIZING WITH SEED " << SEED << G4endl;
+    } else {
+        G4cout << "NOT RANDOMIZING" << G4endl;
+    }
 
     auto *runmgr = G4RunManagerFactory::CreateRunManager();
     G4PhysListFactory *factory = new G4PhysListFactory;
@@ -76,13 +87,14 @@ int main(int argc, char *argv[]) {
 
     G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
 
+    G4bool useTestSource = false; // test neutron source inside highmass1 detector
     G4int Z = 98, A = 252; // Cf-252 calibration source
     //G4int Z = 0, A = 0; // generic neutron source
 
     DCGeometry *geometry = new DCGeometry(lm_face, lm_thick, hm_diameter, hm_thick, cu_thick, spacing, airgap, sourcex, sourcey, sourcez, cuspace1, cuspace2, platethickness);
 
 
-    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez));
+    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, useTestSource));
     runmgr->SetUserInitialization(geometry);
 
     // scoring ntuple writer for scorers
