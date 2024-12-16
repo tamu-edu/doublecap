@@ -23,7 +23,7 @@ public:
 private:
     
     G4int verbosity = 0;
-    G4bool overlaps = true;
+    G4bool overlaps = false;
 
     // geometry component objects
     HousingDetector *detector; // detector stack

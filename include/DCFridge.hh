@@ -18,7 +18,7 @@ public:
 private:
     
     G4int verbosity = 0;
-    G4bool overlaps = true;
+    G4bool overlaps = false;
     
     G4LogicalVolume *motherLV;
     std::vector<G4LogicalVolume*> shields; // shields (upper then lower)

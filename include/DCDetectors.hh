@@ -30,8 +30,8 @@ public:
     void verbose(G4int v) {verbosity = v;}
 private:
     
-    G4int verbosity = 0;
-    G4bool overlaps = true;
+    G4int verbosity = 1;
+    G4bool overlaps = false;
     
     // component volumes
     G4LogicalVolume *motherLV;
@@ -70,7 +70,7 @@ public:
 private:
 
     G4int verbosity = 0;
-    G4bool overlaps = true;
+    G4bool overlaps = false;
     
     G4ThreeVector center;
     G4double swidth = 1.*mm; // width of source block
