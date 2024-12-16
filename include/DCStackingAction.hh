@@ -11,7 +11,7 @@ public:
     virtual ~DCStackingAction() override = default;
 
     G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track*) override;
-}
+};
 
 
 #endif
