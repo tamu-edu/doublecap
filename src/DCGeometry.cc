@@ -94,17 +94,15 @@ void DCGeometry::ConstructWorldBox() {
 
 void DCGeometry::ConstructSDandField() {
 
-
     G4SDManager::GetSDMpointer()->SetVerboseLevel(2);
-    
-    
-    auto lm = new G4MultiFunctionalDetector("lowmass");
+        
+    auto lm = new G4MultiFunctionalDetector("lm");
     G4SDManager::GetSDMpointer()->AddNewDetector(lm);
     G4VPrimitiveScorer *lmprim = new G4PSEnergyDeposit("edep");
     lm->RegisterPrimitive(lmprim);
     SetSensitiveDetector("lmLV", lm);
 
-    auto hm = new G4MultiFunctionalDetector("highmass");
+    auto hm = new G4MultiFunctionalDetector("hm");
     G4SDManager::GetSDMpointer()->AddNewDetector(hm);
     G4VPrimitiveScorer *hmprim = new G4PSEnergyDeposit("edep");
     hm->RegisterPrimitive(hmprim);

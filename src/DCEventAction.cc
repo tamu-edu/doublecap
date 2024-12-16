@@ -28,8 +28,8 @@ void DCEventAction::EndOfEventAction(const G4Event *evt) {
     // Get hits collections IDs
     if (id_lm < 0) {
         G4SDManager* SDMan = G4SDManager::GetSDMpointer();
-        id_lm = SDMan->GetCollectionID("lowmass/edep");
-        id_hm = SDMan->GetCollectionID("highmass/edep");
+        id_lm = SDMan->GetCollectionID("lm/edep");
+        id_hm = SDMan->GetCollectionID("hm/edep");
     }
 
     G4double edep = 0.;
