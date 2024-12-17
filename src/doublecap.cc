@@ -44,6 +44,8 @@ const G4bool RANDOMIZE = false;
 
 int main(int argc, char *argv[]) {
 
+    auto start = std::chrono::steady_clock::now();
+
     if (RANDOMIZE) {
         auto SEED = time(nullptr);
         CLHEP::HepRandom::setTheSeed(SEED);
@@ -87,7 +89,7 @@ int main(int argc, char *argv[]) {
 
     G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
 
-    G4bool useTestSource = false; // test neutron source inside highmass1 detector
+    G4bool useTestSource = true; // test neutron source inside highmass1 detector
     G4int Z = 98, A = 252; // Cf-252 calibration source
     //G4int Z = 0, A = 0; // generic neutron source
 
@@ -128,6 +130,11 @@ int main(int argc, char *argv[]) {
 
     delete runmgr;
     delete vismgr;
+
+    auto diff = std::chrono::steady_clock::now() - start;
+
+    G4cout << "Elapsed time: " << std::chrono::duration<double, std::milli>(diff).count()/1000. << " seconds" << G4endl;
+    
     return 0;
 }
 
