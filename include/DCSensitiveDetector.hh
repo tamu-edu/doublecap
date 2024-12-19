@@ -5,6 +5,7 @@
 
 #include "DCHit.hh"
 #include "G4VSensitiveDetector.hh"
+#include "G4RootAnalysisManager.hh"
 
 
 class G4Step;
@@ -23,6 +24,7 @@ public:
 private:
     DCHitsCollection *fHitsCollection = nullptr;
     const G4ParticleDefinition *fGammaPD = nullptr;
+    G4RootAnalysisManager *fAnalysisMgr;
 };
 
 
