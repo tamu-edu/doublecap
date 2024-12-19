@@ -5,6 +5,7 @@
 #include "DCPrimaryGenerator.hh"
 #include "DCRunAction.hh"
 #include "DCEventAction.hh"
+#include "DCSensitiveDetector.hh"
 
 #include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
@@ -67,7 +68,7 @@ TestGenerator::TestGenerator() : G4VUserPrimaryGeneratorAction(), gun(nullptr)
     gun->SetParticleDefinition(
         G4ParticleTable::GetParticleTable()->FindParticle(pname)
     );
-    gun->SetParticlePosition(G4ThreeVector(0., 0., 1.5*cm));
+    gun->SetParticlePosition(G4ThreeVector(0., 0., 0.));
     gun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
     gun->SetParticleEnergy(penergy);
 }
