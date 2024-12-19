@@ -33,7 +33,7 @@ public:
 private:
     G4ParticleGun *gun;
     G4String pname = "neutron";
-    G4double penergy = 5.*eV;
+    G4double penergy = 0.05*eV;
 };
 
 
