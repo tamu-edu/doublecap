@@ -8,8 +8,9 @@
 #include "DCEventAction.hh"
 
 
-DCEventAction::DCEventAction(DCRunAction *runAction) :
-    runAction(runAction) 
+DCEventAction::DCEventAction(DCRunAction *ra, DCTrackAction *ta) :
+    runAction(ra),
+    trackAction(ta)
 {;}
 
 
@@ -30,10 +31,14 @@ void DCEventAction::EndOfEventAction(const G4Event *evt) {
         G4SDManager* SDMan = G4SDManager::GetSDMpointer();
         id_lm = SDMan->GetCollectionID("lm/edep");
         id_hm = SDMan->GetCollectionID("hm/edep");
+        //id_hm = SDMan->GetCollectionID("DCHitsCollection");
     }
 
     G4double edep = 0.;
 
+    //G4Track *track = step->GetTrack();
+
+    // DCHitsCollection evtMap = (DCHitsCollection*)(HCE->GetHC(id_lm));
     auto evtMap = static_cast<G4THitsMap<G4double>*>(HCE->GetHC(id_lm));
 
     for (auto& mapElement: (*evtMap->GetMap())) {
