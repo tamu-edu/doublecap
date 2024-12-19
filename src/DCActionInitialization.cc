@@ -4,6 +4,7 @@
 #include "DCActionInitialization.hh"
 #include "DCPrimaryGenerator.hh"
 #include "DCRunAction.hh"
+#include "DCTrackAction.hh"
 #include "DCEventAction.hh"
 
 #include "G4ThreeVector.hh"
@@ -20,8 +21,10 @@ DCInitialization::DCInitialization(G4int Z, G4int A, G4double sourcex, G4double 
 
 void DCInitialization::Build() const {
     DCRunAction *runAction = new DCRunAction();
+    DCTrackAction *trackAction = new DCTrackAction(runAction);
     SetUserAction(runAction);
-    SetUserAction(new DCEventAction(runAction));
+    SetUserAction(trackAction);
+    SetUserAction(new DCEventAction(runAction, trackAction));
 
     if (test) {
         SetUserAction(new TestGenerator());
