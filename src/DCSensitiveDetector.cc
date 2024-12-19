@@ -20,6 +20,8 @@ DCSensitiveDetector::DCSensitiveDetector(const G4String& name, const G4String& h
 
 void DCSensitiveDetector::Initialize(G4HCofThisEvent* hitsCollection) {
 
+    fAnalysisMgr = G4RootAnalysisManager::Instance();
+
     fHitsCollection = new DCHitsCollection(SensitiveDetectorName, collectionName[0]);
 
     G4int hcID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
@@ -39,21 +41,23 @@ G4bool DCSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* histor
 
     if (edep == 0.) return false;
 
-    DCHit *newHit = new DCHit();
-
-    newHit->SetEdep(edep);
-
-    G4Track *track = step->GetTrack();
-
-    newHit->SetTrackID(track->GetTrackID());
-
-    const G4Event *event = G4RunManager::GetRunManager()->GetCurrentEvent();
+    const G4Event& *event = G4RunManager::GetRunManager()->GetCurrentEvent();
 
     if (!event) {
-        newHit->SetEvtNumber(-1);
+        //newHit->SetEvtNumber(-1);
+        fAnalysisMgr->FillNtupleIColumn(0, 0, -1);
     } else {
-        newHit->SetEvtNumber(event->GetEventID());
+        //newHit->SetEvtNumber(event->GetEventID());
+        fAnalysisMgr->FillNtupleIColumn(0, 0, event->GetEventID());
     }
+
+    const G4Track& *track = step->GetTrack();
+
+    fAnalysisMgr->FillNtupleIColumn(0, 1, track->GetTrackID());
+    //newHit->SetTrackID(track->GetTrackID());
+
+    fAnalysisMgr->FillNtupleDColumn(0, 2, edep);
+    //newHit->SetEdep(edep);
 
     G4String procname; 
     G4String volname;
@@ -62,21 +66,33 @@ G4bool DCSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* histor
     const G4ParticleDefinition *part = track->GetParticleDefinition();
     G4VPhysicalVolume *fCurrentPV = track->GetVolume();
 
-    newHit->SetParticleName(part->GetParticleName());
+
+    if (!fCurrentPV) {
+        volname = "no volume";
+    } else{
+        volname = fCurrentPV->GetName();
+    }
+    //newHit->SetVolName(volname);
+    fAnalysisMgr->FillNtupleSColumn(0, 3, volname);
+
+    //newHit->SetParticleName(part->GetParticleName());
+    fAnalysisMgr->FillNtupleSColumn(0, 4, part->GetParticleName());
 
     if (!cproc) {
         procname = "no creator process";
     } else {
         procname = cproc->GetProcessName();
     }
-    if (!fCurrentPV) {
-        volname = "no volume";
-    } else{
-        volname = fCurrentPV->GetName();
-    }
-    newHit->SetVolName(volname);
+    //newHit->SetIsCapture(procname == "nCapture" && volname == "lowmass" && part != fGammaPD);
 
-    newHit->SetIsCapture(procname == "nCapture" && volname == "lowmass" && part != fGammaPD);
+    G4String startvolume;
+
+    G4int isCapture = (procname == "nCapture" && startvolume == "lowmass" && part == fGammaPD) ? 1 : 0;
+
+    fAnalysisMgr->FillNtupleSColumn(0, 5, procname);
+
+    fAnalysisMgr->FillNtupleIColumn(0, 6, isCapture);
+    fAnalysisMgr->AddNtupleRow();
 
     return true;
 }
