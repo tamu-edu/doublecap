@@ -18,6 +18,7 @@
 #include "G4SDManager.hh"
 
 #include "DCGeometry.hh"
+#include "DCSensitiveDetector.hh"
 
 DCGeometry::DCGeometry(G4double lm_face, G4double lm_thick, G4double hm_diameter, G4double hm_thick, G4double cu_thick, G4double spacing, G4double airgap_thick, G4double sourcex, G4double sourcey, G4double sourcez, G4double cuspace1, G4double cuspace2, G4double platethickness) : 
     G4VUserDetectorConstruction(),
@@ -107,6 +108,11 @@ void DCGeometry::ConstructSDandField() {
     G4VPrimitiveScorer *hmprim = new G4PSEnergyDeposit("edep");
     hm->RegisterPrimitive(hmprim);
     SetSensitiveDetector("hmLV", hm);
+
+    
+    auto dcdet = new DCSensitiveDetector("dchits","DCHitsCollection");
+    G4SDManager::GetSDMpointer()->AddNewDetector(dcdet);
+    SetSensitiveDetector("hmLV", dcdet);
     return;
 }
 
