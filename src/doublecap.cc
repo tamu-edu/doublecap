@@ -33,11 +33,10 @@
 
 #include "G4ios.hh"
 
-#include "DCActionInitialization.hh"
-#include "DCRunAction.hh"
-#include "DCEventAction.hh"
 #include "DCUtilities.hh"
 #include "DCGeometry.hh"
+#include "DCActionInitialization.hh"
+#include "DCSensitiveDetector.hh"
 
 
 const G4bool RANDOMIZE = false;
@@ -134,7 +133,7 @@ int main(int argc, char *argv[]) {
     auto diff = std::chrono::steady_clock::now() - start;
 
     G4cout << "Elapsed time: " << std::chrono::duration<double, std::milli>(diff).count()/1000. << " seconds" << G4endl;
-    
+
     return 0;
 }
 
