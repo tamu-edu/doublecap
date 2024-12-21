@@ -21,10 +21,9 @@ DCInitialization::DCInitialization(G4int Z, G4int A, G4double sourcex, G4double 
 
 void DCInitialization::Build() const {
     DCRunAction *runAction = new DCRunAction();
-    DCTrackAction *trackAction = new DCTrackAction(runAction);
     SetUserAction(runAction);
-    SetUserAction(trackAction);
-    SetUserAction(new DCEventAction(runAction, trackAction));
+    SetUserAction(new DCTrackAction);
+    SetUserAction(new DCEventAction(runAction));
 
     if (test) {
         SetUserAction(new TestGenerator());
