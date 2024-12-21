@@ -8,9 +8,8 @@
 #include "DCEventAction.hh"
 
 
-DCEventAction::DCEventAction(DCRunAction *ra, DCTrackAction *ta) :
-    runAction(ra),
-    trackAction(ta)
+DCEventAction::DCEventAction(DCRunAction *ra) :
+    fRunAction(ra)
 {;}
 
 
@@ -18,6 +17,8 @@ void DCEventAction::BeginOfEventAction(const G4Event* /*evt*/) {;}
 
 
 void DCEventAction::EndOfEventAction(const G4Event *evt) {
+
+    //G4cout << "Starting EndOfEventAction" << G4endl;
 
     G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
     if (!HCE) {
@@ -45,7 +46,7 @@ void DCEventAction::EndOfEventAction(const G4Event *evt) {
         edep += *(mapElement.second);
     }
 
-    if (edep > 0.) runAction->SumLM(edep);
+    if (edep > 0.) fRunAction->SumLM(edep);
 
     edep = 0.;
 
@@ -55,6 +56,7 @@ void DCEventAction::EndOfEventAction(const G4Event *evt) {
         edep += *(mapElement.second);
     }
 
-    if (edep > 0.) runAction->SumHM(edep);
+    if (edep > 0.) fRunAction->SumHM(edep);
+    //G4cout << "Ending EndOfEventAction" << G4endl;
 
 }
