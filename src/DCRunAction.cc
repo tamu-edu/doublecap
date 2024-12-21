@@ -28,7 +28,7 @@ void DCRunAction::BeginOfRunAction(const G4Run *run) {
 
     auto analysismgr = G4RootAnalysisManager::Instance();
     //analysismgr->SetNtupleMerging(true);
-    G4String filename = "otherscoring.root";
+    G4String filename = "highmass.root";
     analysismgr->OpenFile(filename);
 
     G4int id = analysismgr->CreateNtuple("tree", "tree");
@@ -38,11 +38,13 @@ void DCRunAction::BeginOfRunAction(const G4Run *run) {
     analysismgr->CreateNtupleSColumn("VolName");
     analysismgr->CreateNtupleSColumn("PName");
     analysismgr->CreateNtupleSColumn("ProcName");
+    analysismgr->CreateNtupleSColumn("ParentVol");
     analysismgr->CreateNtupleIColumn("IsCapture");
     analysismgr->FinishNtuple();
 
-    G4cout << "id = " << id << " out of " << analysismgr->GetNofNtuples() << G4endl;
+    //G4cout << "id = " << id << " out of " << analysismgr->GetNofNtuples() << G4endl;
     //G4cout << "GetNofNtuple = " << analysismgr->GetNofNtuples() << G4endl;
+    //G4cout << "finished BeginOfRunAction" << G4endl;
 }
 
 
@@ -57,7 +59,7 @@ void DCRunAction::EndOfRunAction(const G4Run *run) {
     analysismgr->Write();
     analysismgr->CloseFile();
 
-    G4cout << "GetNofNtuple = " << analysismgr->GetNofNtuples() << G4endl;
+    //G4cout << "GetNofNtuple = " << analysismgr->GetNofNtuples() << G4endl;
 
 }
 
