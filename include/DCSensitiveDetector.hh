@@ -2,8 +2,6 @@
 #define DCSENSITIVEDETECTOR_HH
 
 
-
-#include "DCHit.hh"
 #include "G4VSensitiveDetector.hh"
 #include "G4RootAnalysisManager.hh"
 
@@ -22,8 +20,6 @@ public:
     void EndOfEvent(G4HCofThisEvent* hitCollection) override;
 
 private:
-    DCHitsCollection *fHitsCollection = nullptr;
-    const G4ParticleDefinition *fGammaPD = nullptr;
     G4RootAnalysisManager *fAnalysisMgr;
 };
 
