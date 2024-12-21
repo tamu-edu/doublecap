@@ -15,7 +15,7 @@ public:
     void SumLM(G4double en) { enlm += en; };
     void SumHM(G4double en) { enhm += en; };
 
-  private:
+private:
     G4Accumulable<G4double> enlm = 0.;
     G4Accumulable<G4double> enhm = 0.;
 };
