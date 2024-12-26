@@ -14,8 +14,6 @@ public:
     void PreUserTrackingAction(const G4Track*) override;
 
     void PostUserTrackingAction(const G4Track*) override;
-private:
-    const G4ParticleDefinition *fGammaPD = 0;
 };
 
 
