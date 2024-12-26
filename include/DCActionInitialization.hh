@@ -16,7 +16,8 @@ class DCInitialization : public G4VUserActionInitialization {
 public:
     DCInitialization(G4int, G4int, G4double, G4double, G4double, G4bool);
     ~DCInitialization() {;}
-    void Build() const;
+    void BuildForMaster() const override;
+    void Build() const override;
 private:
     G4int Z;
     G4int A;
