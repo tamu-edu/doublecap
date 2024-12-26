@@ -39,9 +39,12 @@
 #include "DCSensitiveDetector.hh"
 
 
-const G4bool RANDOMIZE = false;
+const G4bool RANDOMIZE = false; // set random seed for RNG
+const G4bool USETESTSOURCE = true; // test neutron source inside highmass1 detector
+const G4int NUMBEROFTHREADS = 1; // number of threads for MT mode
 
 int main(int argc, char *argv[]) {
+
 
     auto start = std::chrono::steady_clock::now();
 
@@ -54,6 +57,7 @@ int main(int argc, char *argv[]) {
     }
 
     auto *runmgr = G4RunManagerFactory::CreateRunManager();
+    runmgr->SetNumberOfThreads(NUMBEROFTHREADS);
     G4PhysListFactory *factory = new G4PhysListFactory;
     G4VisManager* vismgr = new G4VisExecutive;
 
@@ -86,22 +90,25 @@ int main(int argc, char *argv[]) {
     G4double sourcez = - (lm_thick/2. + spacing + hm_thick + airgap + cu_thick) + cuspace1 + cuspace2 + platethickness - hang_distance;
 
 
-    G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
+    //G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
 
-    G4bool useTestSource = true; // test neutron source inside highmass1 detector
+
     G4int Z = 98, A = 252; // Cf-252 calibration source
     //G4int Z = 0, A = 0; // generic neutron source
 
     DCGeometry *geometry = new DCGeometry(lm_face, lm_thick, hm_diameter, hm_thick, cu_thick, spacing, airgap, sourcex, sourcey, sourcez, cuspace1, cuspace2, platethickness);
 
 
-    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, useTestSource));
+    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, USETESTSOURCE));
     runmgr->SetUserInitialization(geometry);
 
     // scoring ntuple writer for scorers
     G4TScoreNtupleWriter<G4AnalysisManager> scoreNtupleWriter;
     //scoreNtupleWriter.SetVerboseLevel(1);
-    //scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
+    scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
+
+    auto analysismgr = G4RootAnalysisManager::Instance();
+    analysismgr->SetNtupleMerging(true);
 
     runmgr->Initialize();
     vismgr->Initialize();
