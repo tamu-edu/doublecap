@@ -110,9 +110,13 @@ void DCGeometry::ConstructSDandField() {
     SetSensitiveDetector("hmLV", hm);
 
     
-    auto dcdet = new DCSensitiveDetector("dchits","DCHitsCollection");
+    auto dcdet = new DCSensitiveDetector("hmdchits","DCHitsCollection");
     G4SDManager::GetSDMpointer()->AddNewDetector(dcdet);
     SetSensitiveDetector("hmLV", dcdet);
+
+    auto dcdet2 = new DCSensitiveDetector("lmdchits", "DCHitsCollection");
+    G4SDManager::GetSDMpointer()->AddNewDetector(dcdet2);
+    SetSensitiveDetector("lmLV", dcdet2);
     return;
 }
 
