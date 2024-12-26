@@ -3,16 +3,11 @@
 #include "DCTrackInformation.hh"
 
 // needed for printing stuff
-#include "G4VProcess.hh"
-#include "G4RunManager.hh"
+#include "G4TrackingManager.hh"
 
 
 
-DCTrackAction::DCTrackAction() : 
-    G4UserTrackingAction()
-{
-    fGammaPD = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
-}
+DCTrackAction::DCTrackAction() : G4UserTrackingAction() {;}
 
 
 void DCTrackAction::PreUserTrackingAction(const G4Track *track) {
