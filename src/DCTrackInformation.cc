@@ -1,6 +1,6 @@
 
 #include "DCTrackInformation.hh"
-#include "G4RunManager.hh"
+#include "G4MTRunManager.hh"
 
 
 G4ThreadLocal G4Allocator<DCTrackInformation>* DCTrkInfoAlloc = nullptr;
@@ -15,7 +15,7 @@ DCTrackInformation::DCTrackInformation(const G4Track *track) :
     G4VUserTrackInformation()
 {
     fParentVolume = track->GetVolume()->GetName();
-    const G4Event *event = G4RunManager::GetRunManager()->GetCurrentEvent();
+    const G4Event *event = G4MTRunManager::GetRunManager()->GetCurrentEvent();
     if (!event) {
         fEventID = -1;
     } else {
@@ -40,7 +40,7 @@ DCTrackInformation& DCTrackInformation::operator=(const DCTrackInformation& left
 
 void DCTrackInformation::SetSourceTrackInformation(const G4Track *track) {
     fParentVolume = track->GetVolume()->GetName();
-    const G4Event *event = G4RunManager::GetRunManager()->GetCurrentEvent();
+    const G4Event *event = G4MTRunManager::GetRunManager()->GetCurrentEvent();
     if (!event) {
         fEventID = -1;
     } else {
