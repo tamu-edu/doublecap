@@ -19,6 +19,11 @@ DCInitialization::DCInitialization(G4int Z, G4int A, G4double sourcex, G4double 
     source_position(G4ThreeVector(sourcex, sourcey, sourcez)) 
 {;}
 
+void DCInitialization::BuildForMaster() const {
+    SetUserAction(new DCRunAction);
+}
+
+
 void DCInitialization::Build() const {
     DCRunAction *runAction = new DCRunAction();
     SetUserAction(runAction);
