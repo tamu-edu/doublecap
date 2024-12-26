@@ -4,7 +4,7 @@
 
 #include "G4VSensitiveDetector.hh"
 #include "G4RootAnalysisManager.hh"
-
+#include "G4Threading.hh"
 
 class G4Step;
 class G4HCofThisEvent;
@@ -20,7 +20,8 @@ public:
     void EndOfEvent(G4HCofThisEvent* hitCollection) override;
 
 private:
-    G4RootAnalysisManager *fAnalysisMgr;
+    static G4ThreadLocal G4RootAnalysisManager *fAnalysisMgr;
+    //static G4ThreadLocal G4RootAnalysisManager *fAnalysisMgr;
 };
 
 
