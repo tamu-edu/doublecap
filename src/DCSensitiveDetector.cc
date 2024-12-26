@@ -8,9 +8,9 @@
 #include "G4Track.hh"
 #include "G4ThreeVector.hh"
 #include "G4SDManager.hh"
-#include "G4RunManager.hh"
 #include "G4VProcess.hh"
 
+G4ThreadLocal G4RootAnalysisManager *DCSensitiveDetector::fAnalysisMgr = nullptr;
 
 DCSensitiveDetector::DCSensitiveDetector(const G4String& name, const G4String& hitsCollectionName) :
     G4VSensitiveDetector(name) 
@@ -18,7 +18,9 @@ DCSensitiveDetector::DCSensitiveDetector(const G4String& name, const G4String& h
 
 
 void DCSensitiveDetector::Initialize(G4HCofThisEvent* hitsCollection) {
-    fAnalysisMgr = G4RootAnalysisManager::Instance();
+    if (!fAnalysisMgr) {
+        fAnalysisMgr = G4RootAnalysisManager::Instance();
+    }
 }
 
 
