@@ -16,6 +16,7 @@ public:
     void SumHM(G4double en) { enhm += en; };
 
 private:
+    G4int verbosity = 1;
     G4Accumulable<G4double> enlm = 0.;
     G4Accumulable<G4double> enhm = 0.;
 };
