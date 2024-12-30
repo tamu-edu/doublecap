@@ -35,8 +35,6 @@ void DCRunAction::BeginOfRunAction(const G4Run *run) {
 
     if (1){//G4Threading::IsMasterThread()) {
 
-        analysismgr->SetNtupleMerging(true);
-
         time_t now = time(0);
         tm* localTime = localtime(&now);
 
@@ -80,7 +78,7 @@ void DCRunAction::EndOfRunAction(const G4Run *run) {
     G4AccumulableManager *accumblmgr = G4AccumulableManager::Instance();
     accumblmgr->Merge();
 
-    if (G4Threading::IsMasterThread()) {
+    if (1){//G4Threading::IsMasterThread()) {
         auto analysismgr = G4RootAnalysisManager::Instance();
         analysismgr->Write();
         analysismgr->CloseFile();
