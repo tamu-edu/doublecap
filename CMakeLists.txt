@@ -66,6 +66,13 @@ include("${ROOT_USE_FILE}")
 # configure executables to all be put in base build directory
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+option(COPY_MACROS "Copy files from macros directory to build directory" ON)
+if (COPY_MACROS)
+	message(STATUS "Copying macros to build directory")
+	execute_process(
+		COMMAND find ${CMAKE_SOURCE_DIR}/macros -type f -exec ln -sf "{}" ${CMAKE_BINARY_DIR} ";"
+	)
+endif()
 
 add_subdirectory(src)
 
