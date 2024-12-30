@@ -10,10 +10,10 @@ class DCTrackAction : public G4UserTrackingAction {
 public:
     DCTrackAction();
     virtual ~DCTrackAction() override = default;
-
     void PreUserTrackingAction(const G4Track*) override;
-
     void PostUserTrackingAction(const G4Track*) override;
+private:
+    G4int verbosity = 2;
 };
 
 
