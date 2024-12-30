@@ -13,7 +13,7 @@ public:
     void PreUserTrackingAction(const G4Track*) override;
     void PostUserTrackingAction(const G4Track*) override;
 private:
-    G4int verbosity = 2;
+    G4int verbosity = 0;
 };
 
 
