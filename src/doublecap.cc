@@ -105,10 +105,10 @@ int main(int argc, char *argv[]) {
     // scoring ntuple writer for scorers
     G4TScoreNtupleWriter<G4AnalysisManager> scoreNtupleWriter;
     //scoreNtupleWriter.SetVerboseLevel(1);
-    scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
+    //scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
 
     auto analysismgr = G4RootAnalysisManager::Instance();
-    analysismgr->SetNtupleMerging(true);
+    //analysismgr->SetNtupleMerging(true);
 
     runmgr->Initialize();
     vismgr->Initialize();
