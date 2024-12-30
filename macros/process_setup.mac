@@ -1,0 +1,11 @@
+
+# allow Cf products
+/process/had/rdm/thresholdForVeryLongDecayTime 1.0e+6 year
+
+# don't allow natural Cu or Pb decays
+/process/had/rdm/deselectVolume lead
+/process/had/rdm/deselectVolume det_copper
+/process/had/rdm/deselectVolume plate
+
+# G4VRadioactiveDecay::DeselectAVolume(G4String)
+
