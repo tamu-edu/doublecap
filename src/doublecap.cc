@@ -40,8 +40,8 @@
 
 
 const G4bool RANDOMIZE = false; // set random seed for RNG
-const G4bool USETESTSOURCE = true; // test neutron source inside highmass1 detector
-const G4int NUMBEROFTHREADS = 1; // number of threads for MT mode
+const G4bool USETESTSOURCE = false; // test neutron source inside highmass1 detector
+const G4int NUMBEROFTHREADS = 4; // number of threads for MT mode
 
 int main(int argc, char *argv[]) {
 
@@ -90,25 +90,27 @@ int main(int argc, char *argv[]) {
     G4double sourcez = - (lm_thick/2. + spacing + hm_thick + airgap + cu_thick) + cuspace1 + cuspace2 + platethickness - hang_distance;
 
 
-    //G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
-
-
     G4int Z = 98, A = 252; // Cf-252 calibration source
     //G4int Z = 0, A = 0; // generic neutron source
 
     DCGeometry *geometry = new DCGeometry(lm_face, lm_thick, hm_diameter, hm_thick, cu_thick, spacing, airgap, sourcex, sourcey, sourcez, cuspace1, cuspace2, platethickness);
 
+    time_t now = time(0);
+    tm* localTime = localtime(&now);
 
-    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, USETESTSOURCE));
+    char buffer[80];
+    strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localTime);
+
+    G4String filename = "simdata_" + G4String(buffer) + ".root";
+
+
+    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, USETESTSOURCE, filename));
     runmgr->SetUserInitialization(geometry);
 
     // scoring ntuple writer for scorers
     G4TScoreNtupleWriter<G4AnalysisManager> scoreNtupleWriter;
     //scoreNtupleWriter.SetVerboseLevel(1);
     scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
-
-    auto analysismgr = G4RootAnalysisManager::Instance();
-    analysismgr->SetNtupleMerging(true);
 
     runmgr->Initialize();
     vismgr->Initialize();
