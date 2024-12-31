@@ -11,10 +11,6 @@
 
 
 DCRunAction::DCRunAction(G4String fname) : filename(fname) {
-    G4AccumulableManager *accumblmgr = G4AccumulableManager::Instance();
-
-    accumblmgr->Register(enlm);
-    accumblmgr->Register(enhm);
 
     auto analysismgr = G4RootAnalysisManager::Instance();
     /*analysismgr->SetVerboseLevel(4);
@@ -47,8 +43,6 @@ void DCRunAction::BeginOfRunAction(const G4Run *run) {
     if (verbosity > 1) {
         G4cout << "Start of BeginOfRunAction" << G4endl;
     }
-    G4AccumulableManager *accumblmgr = G4AccumulableManager::Instance();
-    accumblmgr->Reset();
 
     // inform the runManager to save random number seed
     G4MTRunManager::GetRunManager()->SetRandomNumberStore(false);
@@ -70,10 +64,6 @@ void DCRunAction::EndOfRunAction(const G4Run *run) {
 
     G4int nofEvents = run->GetNumberOfEvent();
     if (nofEvents == 0) return;
-
-    G4AccumulableManager *accumblmgr = G4AccumulableManager::Instance();
-    accumblmgr->Merge();
-
 
     auto analysismgr = G4RootAnalysisManager::Instance();
     analysismgr->Write();
