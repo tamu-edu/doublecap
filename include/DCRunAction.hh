@@ -6,7 +6,7 @@
 
 class DCRunAction : public G4UserRunAction {
 public:
-    DCRunAction();
+    DCRunAction(G4String);
     virtual ~DCRunAction() override = default;
 
     void BeginOfRunAction(const G4Run*) override;
@@ -17,6 +17,7 @@ public:
 
 private:
     G4int verbosity = 1;
+    G4String filename;
     G4Accumulable<G4double> enlm = 0.;
     G4Accumulable<G4double> enhm = 0.;
 };
