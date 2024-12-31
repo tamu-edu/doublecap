@@ -14,13 +14,7 @@ DCTrackInformation::DCTrackInformation() :
 DCTrackInformation::DCTrackInformation(const G4Track *track) :
     G4VUserTrackInformation()
 {
-    fParentVolume = track->GetVolume()->GetName();
-    const G4Event *event = G4MTRunManager::GetRunManager()->GetCurrentEvent();
-    if (!event) {
-        fEventID = -1;
-    } else {
-        fEventID = event->GetEventID();
-    }
+    SetSourceTrackInformation(track);
 }
 
 DCTrackInformation::DCTrackInformation(const DCTrackInformation *info) :
@@ -39,7 +33,12 @@ DCTrackInformation& DCTrackInformation::operator=(const DCTrackInformation& left
 }
 
 void DCTrackInformation::SetSourceTrackInformation(const G4Track *track) {
-    fParentVolume = track->GetVolume()->GetName();
+    G4VPhysicalVolume *pv = track->GetVolume();
+    if (!pv) {
+        fParentVolume = "";
+    } else {
+        fParentVolume = pv->GetName();
+    }
     const G4Event *event = G4MTRunManager::GetRunManager()->GetCurrentEvent();
     if (!event) {
         fEventID = -1;
