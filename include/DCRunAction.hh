@@ -12,14 +12,9 @@ public:
     void BeginOfRunAction(const G4Run*) override;
     void EndOfRunAction(const G4Run*) override;
 
-    void SumLM(G4double en) { enlm += en; };
-    void SumHM(G4double en) { enhm += en; };
-
 private:
-    G4int verbosity = 1;
+    G4int verbosity = 0;
     G4String filename;
-    G4Accumulable<G4double> enlm = 0.;
-    G4Accumulable<G4double> enhm = 0.;
 };
 
 #endif

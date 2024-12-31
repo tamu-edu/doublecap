@@ -39,7 +39,7 @@
 #include "DCSensitiveDetector.hh"
 
 
-const G4bool RANDOMIZE = false; // set random seed for RNG
+const G4bool RANDOMIZE = true; // set random seed for RNG
 const G4bool USETESTSOURCE = false; // test neutron source inside highmass1 detector
 const G4int NUMBEROFTHREADS = 4; // number of threads for MT mode
 
@@ -108,9 +108,9 @@ int main(int argc, char *argv[]) {
     runmgr->SetUserInitialization(geometry);
 
     // scoring ntuple writer for scorers
-    G4TScoreNtupleWriter<G4AnalysisManager> scoreNtupleWriter;
+    //G4TScoreNtupleWriter<G4AnalysisManager> scoreNtupleWriter;
     //scoreNtupleWriter.SetVerboseLevel(1);
-    scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
+    //scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
 
     runmgr->Initialize();
     vismgr->Initialize();

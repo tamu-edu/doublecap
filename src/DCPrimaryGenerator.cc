@@ -4,7 +4,6 @@
 #include "DCUtilities.hh"
 #include "DCPrimaryGenerator.hh"
 #include "DCRunAction.hh"
-#include "DCEventAction.hh"
 #include "DCSensitiveDetector.hh"
 
 #include "G4ThreeVector.hh"
