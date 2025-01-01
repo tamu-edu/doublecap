@@ -41,7 +41,7 @@
 
 const G4bool RANDOMIZE = true; // set random seed for RNG
 const G4bool USETESTSOURCE = false; // test neutron source inside highmass1 detector
-const G4int NUMBEROFTHREADS = 4; // number of threads for MT mode
+const G4int NUMBEROFTHREADS = 8; // number of threads for MT mode
 
 int main(int argc, char *argv[]) {
 
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
     char buffer[80];
     strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localTime);
 
-    G4String filename = "simdata_" + G4String(buffer) + ".root";
+    G4String filename = "data/simdata_" + G4String(buffer) + ".root";
 
 
     runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, USETESTSOURCE, filename));
