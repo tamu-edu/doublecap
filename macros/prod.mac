@@ -7,6 +7,7 @@
 
 /run/beamOn 50000000
 
+# assume everything else had 50,000,000
 
 # 500,000,000: dumped core about an hour or two in
 # simdata_20241231_145127
