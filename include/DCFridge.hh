@@ -12,8 +12,6 @@ public:
     FridgeBlock(G4double, G4double, G4double, G4double, G4double, G4double, G4LogicalVolume*);
     virtual ~FridgeBlock() {;}
     G4LogicalVolume* GetPlate() const {return plateLV;}
-    G4LogicalVolume* GetShield(G4int i) const {return shields[i];}
-    G4int GetNumShields() const {return shields.size();}
     void verbose(G4int v) {verbosity = v;}
 private:
     
@@ -21,7 +19,6 @@ private:
     G4bool overlaps = false;
     
     G4LogicalVolume *motherLV;
-    std::vector<G4LogicalVolume*> shields; // shields (upper then lower)
     G4LogicalVolume *plateLV;
 
     G4double cuspace1; // spacing between MXC and cold plate
