@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
     // thickness of copper layer
     G4double platethickness = 6.*mm;
 
-    G4double hang_distance = 6.5*mm; // distance below 4k stage center of source box hangs
+    G4double hang_distance = 3.*cm; // distance below 4k stage center of source box hangs
 
 
     // position of center of source box
