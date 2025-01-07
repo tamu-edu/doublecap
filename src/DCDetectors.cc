@@ -41,7 +41,8 @@ G4VPhysicalVolume* HousingDetector::Construct() {
 
     G4ThreeVector origin = G4ThreeVector(0.,0.,0.);
 
-    G4Material *bulk = G4NistManager::Instance()->FindOrBuildMaterial("G4_Si");
+    G4Material *silicon = G4NistManager::Instance()->FindOrBuildMaterial("G4_Si");
+    G4Material *germanium = G4NistManager::Instance()->FindOrBuildMaterial("G4_Ge");
     G4Material *cu = G4NistManager::Instance()->FindOrBuildMaterial("G4_Cu");
     G4Material *air = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic"); // G4_AIR
 
@@ -81,8 +82,8 @@ G4VPhysicalVolume* HousingDetector::Construct() {
 
     copperLV = new G4LogicalVolume(copper, cu, "det_copper");
     airgapLV = new G4LogicalVolume(airgap, air, "det_airgap");
-    lmLV = new G4LogicalVolume(lm, bulk, "lmLV");
-    hmLV = new G4LogicalVolume(hm1, bulk, "hmLV");
+    lmLV = new G4LogicalVolume(lm, silicon, "lmLV");
+    hmLV = new G4LogicalVolume(hm1, germanium, "hmLV");
 
 
     if (verbosity > 1) {
