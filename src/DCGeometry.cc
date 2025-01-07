@@ -57,7 +57,6 @@ G4VPhysicalVolume* DCGeometry::Construct() {
     G4Colour highmassColor = G4Color(0.1, 1., 1.);
     G4Colour sourceColor = G4Color(1., 1., 1.);
     G4Colour copperColor = G4Color(0.88, 0.42, 0.09);
-    G4Colour shieldColor = G4Color(0.7, 0.7, 0.7);
 
 
     worldLV->SetVisAttributes(G4VisAttributes(false));
@@ -71,13 +70,6 @@ G4VPhysicalVolume* DCGeometry::Construct() {
         G4cout << "doing fridge plate color" << G4endl;
     }
     fridge->GetPlate()->SetVisAttributes(G4VisAttributes(copperColor));
-    if (verbosity > 0) {
-        G4cout << "doing for " << fridge->GetNumShields() << " shields" << G4endl;
-    }
-    for (int i = 0; i < fridge->GetNumShields(); ++i) {
-        fridge->GetShield(i)->SetVisAttributes(G4VisAttributes(shieldColor));
-    }
-
 
     return new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), worldLV, "World", nullptr, false, 0, overlaps);
 }
@@ -85,9 +77,9 @@ G4VPhysicalVolume* DCGeometry::Construct() {
 
 
 void DCGeometry::ConstructWorldBox() {
-    G4Material *galactic = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic"); //G4_AIR
+    G4Material *hdpe = G4NistManager::Instance()->FindOrBuildMaterial("G4_POLYETHYLENE"); //G4_AIR
     G4Box *worldBox = new G4Box("WorldBox", 30.*cm, 30.*cm, 50.*cm);
-    worldLV = new G4LogicalVolume(worldBox, galactic, "World");
+    worldLV = new G4LogicalVolume(worldBox, hdpe, "World");
 }
 
 
