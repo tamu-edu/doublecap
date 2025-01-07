@@ -101,7 +101,13 @@ int main(int argc, char *argv[]) {
     char buffer[80];
     strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localTime);
 
-    G4String filename = "data/simdata_" + G4String(buffer) + ".root";
+    G4String filename;
+    
+    if (USETESTSOURCE) {
+        filename = "test_data/simdata_" + G4String(buffer) + ".root";
+    } else {
+        filename = "data/simdata_" + G4String(buffer) + ".root";
+    }
 
 
     runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, USETESTSOURCE, filename));
