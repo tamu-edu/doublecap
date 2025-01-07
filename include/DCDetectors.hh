@@ -75,7 +75,7 @@ private:
     G4ThreeVector center;
     G4double swidth = 1.*mm; // width of source block
     G4double sthick = 1.*mm; // thickness of source block
-    G4double pbthickness = 5.*mm; // thickness of lead box (no airgap)
+    G4double pbthickness = 2.5*cm; // thickness of lead box (no airgap)
 
     G4LogicalVolume* sourceLogical;
     G4LogicalVolume *motherLogical;
