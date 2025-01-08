@@ -2,6 +2,7 @@
 #include "DCSensitiveDetector.hh"
 #include "DCTrackInformation.hh"
 
+#include "G4SystemOfUnits.hh"
 #include "G4HCofThisEvent.hh"
 #include "G4Step.hh"
 #include "G4Event.hh"
@@ -39,7 +40,7 @@ G4bool DCSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* histor
 
     fAnalysisMgr->FillNtupleIColumn(0, 1, track->GetTrackID());
 
-    fAnalysisMgr->FillNtupleDColumn(0, 2, edep);
+    fAnalysisMgr->FillNtupleDColumn(0, 2, edep/MeV);
 
     G4String volname = track->GetVolume()->GetName();
     fAnalysisMgr->FillNtupleSColumn(0, 3, volname);
@@ -60,6 +61,16 @@ G4bool DCSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* histor
 
     G4int isCapture = (procname == "nCapture" && startvolume == "lowmass") ? 1 : 0;
     fAnalysisMgr->FillNtupleIColumn(0, 7, isCapture);
+
+    fAnalysisMgr->FillNtupleDColumn(0, 8, step->GetPreStepPoint()->GetKineticEnergy()/MeV);
+
+    fAnalysisMgr->FillNtupleDColumn(0, 9, step->GetPostStepPoint()->GetKineticEnergy()/MeV);
+
+
+    G4String depProc = step->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+    fAnalysisMgr->FillNtupleSColumn(0, 10, depProc);
+
+    fAnalysisMgr->FillNtupleDColumn(0, 11, step->GetPostStepPoint()->GetGlobalTime());
 
     fAnalysisMgr->AddNtupleRow();
 

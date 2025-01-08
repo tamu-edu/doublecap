@@ -28,6 +28,10 @@ DCRunAction::DCRunAction(G4String fname) : filename(fname) {
     analysismgr->CreateNtupleSColumn("ProcName");
     analysismgr->CreateNtupleSColumn("ParentVol");
     analysismgr->CreateNtupleIColumn("IsCapture");
+    analysismgr->CreateNtupleDColumn("KE");
+    analysismgr->CreateNtupleDColumn("KE3");
+    analysismgr->CreateNtupleSColumn("DepProc");
+    analysismgr->CreateNtupleDColumn("Time");
     analysismgr->FinishNtuple();
 
     if (verbosity > 0) {
