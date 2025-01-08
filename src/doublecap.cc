@@ -39,14 +39,14 @@
 #include "DCSensitiveDetector.hh"
 
 
-const G4bool RANDOMIZE = false; // set random seed for RNG
+const G4bool RANDOMIZE = true; // set random seed for RNG
 const G4int NUMBEROFTHREADS = 1; // number of threads for MT mode
 
 // simulation mode:
 // 0 = test source (0.1 eV neutrons at (0,0,0))
 // 1 = rate simulation (Cf source)
 // 2 = capture simulation (capture source)
-const G4int SIMULATIONMODE = 0; 
+const G4int SIMULATIONMODE = 1; 
 
 
 int main(int argc, char *argv[]) {
@@ -115,6 +115,7 @@ int main(int argc, char *argv[]) {
             break;
         case 1:
             filename = "rate_data/simdata_" + G4String(buffer) + ".root";
+            break;
         default:
             G4cerr << "Error. Unknown simulation mode." << G4endl;
             return 1;
