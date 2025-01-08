@@ -39,9 +39,15 @@
 #include "DCSensitiveDetector.hh"
 
 
-const G4bool RANDOMIZE = true; // set random seed for RNG
-const G4bool USETESTSOURCE = false; // test neutron source inside highmass1 detector
-const G4int NUMBEROFTHREADS = 8; // number of threads for MT mode
+const G4bool RANDOMIZE = false; // set random seed for RNG
+const G4int NUMBEROFTHREADS = 1; // number of threads for MT mode
+
+// simulation mode:
+// 0 = test source (0.1 eV neutrons at (0,0,0))
+// 1 = rate simulation (Cf source)
+// 2 = capture simulation (capture source)
+const G4int SIMULATIONMODE = 0; 
+
 
 int main(int argc, char *argv[]) {
 
@@ -103,14 +109,20 @@ int main(int argc, char *argv[]) {
 
     G4String filename;
     
-    if (USETESTSOURCE) {
-        filename = "test_data/simdata_" + G4String(buffer) + ".root";
-    } else {
-        filename = "data/simdata_" + G4String(buffer) + ".root";
+    switch (SIMULATIONMODE) {
+        case 0:
+            filename = "test_data/simdata_" + G4String(buffer) + ".root";
+            break;
+        case 1:
+            filename = "rate_data/simdata_" + G4String(buffer) + ".root";
+        default:
+            G4cerr << "Error. Unknown simulation mode." << G4endl;
+            return 1;
     }
+    
 
 
-    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, USETESTSOURCE, filename));
+    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, SIMULATIONMODE, filename));
     runmgr->SetUserInitialization(geometry);
 
     // scoring ntuple writer for scorers
