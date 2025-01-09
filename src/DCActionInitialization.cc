@@ -12,10 +12,11 @@
 #include "G4ParticleTable.hh"
 
 
-DCInitialization::DCInitialization(G4int Z, G4int A, G4double sourcex, G4double sourcey, G4double sourcez, G4int mode, G4String fname) : 
+DCInitialization::DCInitialization(G4int Z, G4int A, G4double sourcez, G4double sourcesize, G4int mode, G4String fname) : 
     G4VUserActionInitialization(), 
     Z(Z), A(A), mode(mode), filename(fname),
-    source_position(G4ThreeVector(sourcex, sourcey, sourcez)) 
+    sourcez(sourcez),
+    sourcesize(sourcesize)
 {;}
 
 void DCInitialization::BuildForMaster() const {
@@ -33,7 +34,7 @@ void DCInitialization::Build() const {
             SetUserAction(new TestGenerator);
             break;
         case 1:
-            SetUserAction(new DCPrimaryGenerator(Z, A, source_position));
+            SetUserAction(new DCPrimaryGenerator(Z, A, sourcez, sourcesize));
             break;
         default:
             G4cerr << "Simulation mode not recognized. This will probably not go well." << G4endl;

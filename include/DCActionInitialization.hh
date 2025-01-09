@@ -14,14 +14,15 @@
 
 class DCInitialization : public G4VUserActionInitialization {
 public:
-    DCInitialization(G4int, G4int, G4double, G4double, G4double, G4int, G4String);
+    DCInitialization(G4int, G4int, G4double, G4double, G4int, G4String);
     ~DCInitialization() {;}
     void BuildForMaster() const override;
     void Build() const override;
 private:
     G4int Z;
     G4int A;
-    G4ThreeVector source_position;
+    G4double sourcez;
+    G4double sourcesize;
     G4int mode;
     G4String filename;
 };
