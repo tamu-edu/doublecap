@@ -12,12 +12,13 @@
 #include "G4ParticleTable.hh"
 
 
-DCPrimaryGenerator::DCPrimaryGenerator(G4int Z, G4int A, G4ThreeVector source_position) : 
+DCPrimaryGenerator::DCPrimaryGenerator(G4int Z, G4int A, G4double sourcez, G4double sourcesize) : 
     G4VUserPrimaryGeneratorAction(), 
     gun(nullptr), 
     theParticle(nullptr) , 
     Z(Z), A(A),
-    source_position(source_position)
+    sourcez(sourcez),
+    sourcesize(sourcesize)
 {
     gun = new G4ParticleGun(1);
 }
@@ -37,11 +38,10 @@ void DCPrimaryGenerator::GetParticleDefinition() {
 
 void DCPrimaryGenerator::SetParticlePositionMomentum() {
 
-    gun->SetParticlePosition(source_position + 
-        G4ThreeVector((G4UniformRand() - 0.5)*sideLength,
-                      (G4UniformRand() - 0.5)*sideLength,
-                      (G4UniformRand() - 0.5)*sideLength
-                      
+    gun->SetParticlePosition( 
+        G4ThreeVector((G4UniformRand() - 0.5)*sourcesize,
+                      (G4UniformRand() - 0.5)*sourcesize,
+                      sourcez + (G4UniformRand() - 0.5)*sourcesize 
     ));
 
     if (Z == 0 && A == 0) { // particle = neutron: randomize direction

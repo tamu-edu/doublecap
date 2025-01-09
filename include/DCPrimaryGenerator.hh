@@ -10,18 +10,18 @@
 
 class DCPrimaryGenerator : public G4VUserPrimaryGeneratorAction {
 public:
-    DCPrimaryGenerator(G4int, G4int, G4ThreeVector);
+    DCPrimaryGenerator(G4int, G4int, G4double, G4double);
     ~DCPrimaryGenerator() {;}
     void GeneratePrimaries(G4Event *);
     void GetParticleDefinition();
     void SetParticlePositionMomentum();
 private:
-    G4double sideLength = 1.*mm; // side length of source cube
+    G4double sourcesize; // side length of source cube
+    G4double sourcez;
     G4ParticleGun *gun;
     G4ParticleDefinition *theParticle;
     G4int Z;
     G4int A;
-    G4ThreeVector source_position;
 };
 
 
