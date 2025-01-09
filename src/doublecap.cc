@@ -51,8 +51,13 @@ const G4int SIMULATIONMODE = 1;
 
 int main(int argc, char *argv[]) {
 
-
     auto start = std::chrono::steady_clock::now();
+
+    auto *runmgr = G4RunManagerFactory::CreateRunManager();
+    runmgr->SetNumberOfThreads(NUMBEROFTHREADS);
+    G4PhysListFactory *factory = new G4PhysListFactory;
+    G4VisManager* vismgr = new G4VisExecutive;
+
 
     if (RANDOMIZE) {
         auto SEED = time(nullptr);
@@ -62,12 +67,26 @@ int main(int argc, char *argv[]) {
         G4cout << "NOT RANDOMIZING" << G4endl;
     }
 
-    auto *runmgr = G4RunManagerFactory::CreateRunManager();
-    runmgr->SetNumberOfThreads(NUMBEROFTHREADS);
-    G4PhysListFactory *factory = new G4PhysListFactory;
-    G4VisManager* vismgr = new G4VisExecutive;
+    time_t now = time(0);
+    tm* localTime = localtime(&now);
 
-    runmgr->SetUserInitialization(factory->GetReferencePhysList("Shielding_HPT"));
+    char buffer[80];
+    strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localTime);
+
+    G4String filename;
+    
+    switch (SIMULATIONMODE) {
+        case 0:
+            filename = "test_data/testsim_" + G4String(buffer) + ".root";
+            break;
+        case 1:
+            filename = "test_data/ratesim_" + G4String(buffer) + ".root";
+            break;
+        default:
+            G4cerr << "Error. Unknown simulation mode." << G4endl;
+            return 1;
+    }
+    G4cout << "Writing data to " << filename << G4endl;
 
     // geometry
     G4double lm_face = 1.*cm; // width of lowmass
@@ -80,56 +99,24 @@ int main(int argc, char *argv[]) {
     G4double cu_thick = 0.2*mm; // thickness of copper boxes
     G4double spacing = 1.5*mm; // spacing between silicon detectors
 
-    // spacing between copper layers
-    G4double cuspace1 = 16.*cm;
-    G4double cuspace2 = 9.*cm;
-
-    // thickness of copper layer
-    G4double platethickness = 6.*mm;
-
-    G4double hang_distance = 3.*cm; // distance below 4k stage center of source box hangs
-
-
-    // position of center of source box
-    G4double sourcex = 0; 
-    G4double sourcey = 0;
-    G4double sourcez = - (lm_thick/2. + spacing + hm_thick + airgap + cu_thick) + cuspace1 + cuspace2 + platethickness - hang_distance;
-
+    G4double pethickness = 10.*cm; // thickness of polyethylene between detector box and lead shield
+    G4double leadthickness = 15.*cm; // thickness (height) of lead shield
+    G4double leadradius = 3.*cm; // radius of cylindrical lead shield
+    G4double sourcesize = 1.*mm; // side length of Cf cube
 
     G4int Z = 98, A = 252; // Cf-252 calibration source
     //G4int Z = 0, A = 0; // generic neutron source
 
-    DCGeometry *geometry = new DCGeometry(lm_face, lm_thick, hm_diameter, hm_thick, cu_thick, spacing, airgap, sourcex, sourcey, sourcez, cuspace1, cuspace2, platethickness);
+    DCGeometry *geometry = new DCGeometry(lm_face, lm_thick, hm_diameter, hm_thick, cu_thick, spacing, airgap, pethickness, leadthickness, leadradius, sourcesize);
 
-    time_t now = time(0);
-    tm* localTime = localtime(&now);
+    // z position of center of source block
+    G4double sourcez = geometry->GetSourceZ();
 
-    char buffer[80];
-    strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localTime);
+    G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
 
-    G4String filename;
-    
-    switch (SIMULATIONMODE) {
-        case 0:
-            filename = "test_data/simdata_" + G4String(buffer) + ".root";
-            break;
-        case 1:
-            filename = "rate_data/simdata_" + G4String(buffer) + ".root";
-            break;
-        default:
-            G4cerr << "Error. Unknown simulation mode." << G4endl;
-            return 1;
-    }
-    
-
-
-    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcex, sourcey, sourcez, SIMULATIONMODE, filename));
+    runmgr->SetUserInitialization(factory->GetReferencePhysList("Shielding_HPT"));
+    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcez, sourcesize, SIMULATIONMODE, filename));
     runmgr->SetUserInitialization(geometry);
-
-    // scoring ntuple writer for scorers
-    //G4TScoreNtupleWriter<G4AnalysisManager> scoreNtupleWriter;
-    //scoreNtupleWriter.SetVerboseLevel(1);
-    //scoreNtupleWriter.SetNtupleMerging(true); // only for multithreaded mode
 
     runmgr->Initialize();
     vismgr->Initialize();
