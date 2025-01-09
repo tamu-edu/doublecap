@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     G4double cu_thick = 0.2*mm; // thickness of copper boxes
     G4double spacing = 1.5*mm; // spacing between silicon detectors
 
-    G4double pethickness = 10.*cm; // thickness of polyethylene between detector box and lead shield
+    G4double pethickness = 5.*cm; // thickness of polyethylene between detector box and lead shield
     G4double leadthickness = 15.*cm; // thickness (height) of lead shield
     G4double leadradius = 3.*cm; // radius of cylindrical lead shield
     G4double sourcesize = 1.*mm; // side length of Cf cube
