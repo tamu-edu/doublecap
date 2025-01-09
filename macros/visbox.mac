@@ -18,9 +18,7 @@
 /vis/geometry/set/lineWidth all -1 2
 
 /vis/geometry/set/visibility lead -1 false
-/vis/geometry/set/visibility uppershield -1 false
-/vis/geometry/set/visibility lowershield -1 false
-/vis/geometry/set/visibility plate -1 false
+/vis/geometry/set/visibility source -1 false
 
 
 /vis/viewer/set/lineSegmentsPerCircle 100
