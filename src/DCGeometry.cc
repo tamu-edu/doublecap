@@ -98,7 +98,7 @@ void DCGeometry::SetVisAttributes() {
 
     G4Colour lowmassColor = G4Color(1., 0.1, 1.);
     G4Colour highmassColor = G4Color(0.1, 1., 1.);
-    G4Colour sourceColor = G4Color(1., 1., 1.);
+    G4Colour sourceColor = G4Color(0.1, 1., 0.1);
     G4Colour copperColor = G4Color(0.88, 0.42, 0.09);
     G4Colour leadColor = G4Color(0.8, 0.8, 0.8);
 
