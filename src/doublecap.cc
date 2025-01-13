@@ -40,7 +40,7 @@
 
 
 const G4bool RANDOMIZE = true; // set random seed for RNG
-const G4int NUMBEROFTHREADS = 1; // number of threads for MT mode
+const G4int NUMBEROFTHREADS = 8; // number of threads for MT mode
 
 // simulation mode:
 // 0 = test source (0.1 eV neutrons at (0,0,0))
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
             filename = "test_data/testsim_" + G4String(buffer) + ".root";
             break;
         case 1:
-            filename = "test_data/ratesim_" + G4String(buffer) + ".root";
+            filename = "rate_data_10_5/ratesim_" + G4String(buffer) + ".root";
             break;
         default:
             G4cerr << "Error. Unknown simulation mode." << G4endl;
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
     G4double spacing = 1.5*mm; // spacing between silicon detectors
 
     G4double pethickness = 5.*cm; // thickness of polyethylene between detector box and lead shield
-    G4double leadthickness = 15.*cm; // thickness (height) of lead shield
+    G4double leadthickness = 10.*cm; // thickness (height) of lead shield
     G4double leadradius = 3.*cm; // radius of cylindrical lead shield
     G4double sourcesize = 1.*mm; // side length of Cf cube
 
