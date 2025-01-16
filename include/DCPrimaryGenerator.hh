@@ -7,21 +7,43 @@
 #include "G4Ions.hh"
 #include "G4SystemOfUnits.hh"
 
+class DCGeometry;
 
 class DCPrimaryGenerator : public G4VUserPrimaryGeneratorAction {
 public:
-    DCPrimaryGenerator(G4int, G4int, G4double, G4double);
+    DCPrimaryGenerator(G4int, G4int, DCGeometry*);
     ~DCPrimaryGenerator() {;}
-    void GeneratePrimaries(G4Event *);
+    void GeneratePrimaries(G4Event*);
     void GetParticleDefinition();
     void SetParticlePositionMomentum();
+    void CalculateParams();
 private:
+    G4int verbosity = 2;
+    DCGeometry *fGeometry;
     G4double sourcesize; // side length of source cube
     G4double sourcez;
     G4ParticleGun *gun;
-    G4ParticleDefinition *theParticle;
+    G4ParticleDefinition *fParticle;
     G4int Z;
     G4int A;
+};
+
+
+class CaptureGenerator : public G4VUserPrimaryGeneratorAction {
+public:
+    CaptureGenerator(DCGeometry*);
+    ~CaptureGenerator() {;}
+    void GeneratePrimaries(G4Event*);
+    void SetParticlePosition();
+    void SetParticleDefinition();
+    void CalculateParams();
+private:
+    G4double dimx;
+    G4double dimy;
+    G4double dimz;
+    DCGeometry *fGeometry;
+    G4ParticleDefinition *fParticle;
+    G4ParticleGun *gun;
 };
 
 
@@ -33,7 +55,7 @@ public:
 private:
     G4ParticleGun *gun;
     G4String pname = "neutron";
-    G4double penergy = 0.05*eV;
+    G4double penergy = 0.025*eV;
 };
 
 
