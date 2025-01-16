@@ -9,6 +9,8 @@
 //
 
 #include "DCDetectors.hh"
+#include "G4Tubs.hh"
+#include "G4SystemOfUnits.hh"
 
 
 class DCGeometry : public G4VUserDetectorConstruction {
@@ -22,6 +24,9 @@ public:
     void SetVisAttributes();
     void ConstructSDandField() override;
     G4double GetSourceZ() const {return sourcez;}
+    G4double GetSourceSize() const {return sourcesize;}
+    G4double GetLMFace() const {return lm_face;}
+    G4double GetLMThickness() const {return lm_thick;}
     void verbose(G4int v) {verbosity = v;}
 private:
     
