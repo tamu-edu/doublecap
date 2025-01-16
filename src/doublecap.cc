@@ -39,14 +39,14 @@
 #include "DCSensitiveDetector.hh"
 
 
-const G4bool RANDOMIZE = true; // set random seed for RNG
-const G4int NUMBEROFTHREADS = 8; // number of threads for MT mode
+const G4bool RANDOMIZE = false; // set random seed for RNG
+const G4int NUMBEROFTHREADS = 1; // number of threads for MT mode
 
 // simulation mode:
 // 0 = test source (0.1 eV neutrons at (0,0,0))
 // 1 = rate simulation (Cf source)
 // 2 = capture simulation (capture source)
-const G4int SIMULATIONMODE = 1; 
+const G4int SIMULATIONMODE = 0; 
 
 
 int main(int argc, char *argv[]) {
@@ -78,9 +78,15 @@ int main(int argc, char *argv[]) {
     switch (SIMULATIONMODE) {
         case 0:
             filename = "test_data/testsim_" + G4String(buffer) + ".root";
+            G4cout << "SIMULATION MODE 0: TEST" << G4endl;
             break;
         case 1:
-            filename = "rate_data_10_5/ratesim_" + G4String(buffer) + ".root";
+            filename = "capture_sim/simtest_" + G4String(buffer) + ".root";
+            G4cout << "SIMULATION MODE 1: RATE SIMULATION" << G4endl;
+            break;
+        case 2:
+            filename = "capture_sim/simdata_" + G4String(buffer) + ".root";
+            G4cout << "SIMULATION MODE 2: CAPTURE SIMULATION" << G4endl;
             break;
         default:
             G4cerr << "Error. Unknown simulation mode." << G4endl;
@@ -114,8 +120,8 @@ int main(int argc, char *argv[]) {
 
     G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
 
-    runmgr->SetUserInitialization(factory->GetReferencePhysList("Shielding_HPT"));
-    runmgr->SetUserInitialization(new DCInitialization(Z, A, sourcez, sourcesize, SIMULATIONMODE, filename));
+    runmgr->SetUserInitialization(factory->GetReferencePhysList("Shielding_HP"));
+    runmgr->SetUserInitialization(new DCInitialization(Z, A, geometry, SIMULATIONMODE, filename));
     runmgr->SetUserInitialization(geometry);
 
     runmgr->Initialize();
