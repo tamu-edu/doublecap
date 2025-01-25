@@ -1,0 +1,33 @@
+Bootstrap: localimage
+From: /tmp/lima/g4images/base_env.sif
+
+%post
+
+    ## ROOT install
+    ROOTVERSION=6.30.04
+    mkdir /buildroot
+    cd /buildroot
+
+    ## build ROOT from scratch (default option)
+    curl https://root.cern/download/root_v${ROOTVERSION}.source.tar.gz | tar -xz
+    cmake root-${ROOTVERSION} -DCMAKE_INSTALL_PREFIX=/usr/local \
+          -Dfortran=ON \
+          -Dminuit2=ON \
+          -Dmysql=ON \
+          -Dsoversion=ON \
+          -Dsqlite=ON \
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    make -j8 && make install
+
+    ## make ROOT libraries appear in python path
+    echo "/usr/local/lib" > /usr/local/lib/python3.10/dist-packages/ROOT.pth
+
+    ldconfig
+    cd /
+    rm -rf /buildroot
+
+
+%environment
+    export ROOTSYS=/usr/local
+    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+

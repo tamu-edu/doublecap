@@ -1,0 +1,54 @@
+Bootstrap: localimage
+From: /tmp/lima/g4images/root_env.sif
+
+
+%post
+
+    ## Geant4 and Qt required packages
+    apt-get update && \
+    apt-get install -y libopengl-dev libxerces-c-dev libxmu-dev \
+            libqt5opengl5-dev libcanberra-gtk-module libcanberra-gtk3-module && \
+    apt-get clean
+
+
+    ## Fix needed for Qt on some systems (e.g. Compute Canada)
+    #strip --remove-section=.note.ABI-tag /lib/x86_64-linux-gnu/libQt5Core.so
+
+
+
+    ## install Geant4
+
+    G4BUILD=/geant4
+    G4BUILD_TYPE=RelWithDebInfo
+    mkdir -p $G4BUILD
+    cd $G4BUILD 
+    #curl https://geant4-data.web.cern.ch/releases/geant4.${G4VERSION}.tar.gz | \
+    #     tar -xz
+    wget https://gitlab.cern.ch/geant4/geant4/-/archive/v11.3.0/geant4-v11.3.0.tar.gz
+    tar xzf geant4-v11.3.0.tar.gz
+    mkdir build
+    cd build
+    cmake ../geant4-v11.3.0 -DCMAKE_INSTALL_PREFIX=/usr/local \
+        -DCMAKE_BUILD_TYPE=${G4BUILD_TYPE} \
+        -DGEANT4_INSTALL_DATA=ON -DGEANT4_BUILD_MULTITHREADED=ON \
+        -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=OFF \
+        -DGEANT4_USE_QT=ON -DGEANT4_INSTALL_EXAMPLES=OFF
+    make -j8 && make install
+    cd / 
+    rm -rf $G4BUILD
+
+    ## we can't source geant4make in %environment, so fake it here:
+    bash -c "cd /usr/local/share/Geant4/geant4make && \
+        source geant4make.sh && \
+        env | grep '^G4' | grep -v G4WORKDIR | sed 's/^/export /' \
+        >> $APPTAINER_ENVIRONMENT"
+
+
+%environment
+
+    export G4INSTALL=/usr/local
+
+    ## to suppress Qt env warnings
+    export XDG_RUNTIME_DIR=""
+    export SESSION_MANAGER=""
+    export LC_ALL="C.UTF-8"
