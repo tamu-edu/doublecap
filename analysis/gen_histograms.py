@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
+import ROOT
 import glob
 import sys
 import os
-import tqdm
-
 
 data_dir = '/scratch/user/ajbiffl3/doublecap/data/rate_sim/'
-output_dir = '/home/ajbiffl3/soft/doublecap/analysis/analysis_data'
+output_dir = '/home/ajbiffl3/soft/doublecap/analysis/analysis_data/'
+
 default_num = 5e7
 
 primary_dict = {
@@ -93,7 +93,7 @@ coincidence_events = {detdet: {det: {Q: ROOT.TH1D(
 def get_evt_type(PName):
     if PName in 'e- e+ gamma proton alpha deuteron':
         return 'ER'
-    elif PName in 'P31 ' or PName[:2] in 'Si Al Mg Ge Ga As': 
+    elif PName in 'P31 ' or PName[:2] in 'Si Al Mg Ge Ga As Se': 
         return 'NR'
     else:
         raise Exception('unknown PName = ' + PName + ', ProcName = ' + getattr(tree, 'ProcName'))
@@ -123,7 +123,7 @@ for detdet in codetectors:
 
 lowmass_captures = {}
 
-for file in tqdm.tqdm(filenames):
+for file in filenames:
     #print(file)
 
     last_event = -1
