@@ -85,8 +85,7 @@ void DCGeometry::ComputeParams() {
 
 
 void DCGeometry::ConstructWorldBox() {
-    //G4Material *hdpe = G4NistManager::Instance()->FindOrBuildMaterial("G4_POLYETHYLENE");
-    G4Material *hdpe = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
+    G4Material *hdpe = G4NistManager::Instance()->FindOrBuildMaterial("G4_POLYETHYLENE");
     G4Box *worldBox = new G4Box("WorldBox", world_halfwidth, world_halfwidth, world_halfheight);
     worldLV = new G4LogicalVolume(worldBox, hdpe, "World");
     if (verbosity > 1) {
