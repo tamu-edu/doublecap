@@ -31,7 +31,7 @@ public:
     void verbose(G4int v) {verbosity = v;}
 private:
     
-    G4int verbosity = 1;
+    G4int verbosity = 0;
     G4bool overlaps = false;
     
     // component volumes
