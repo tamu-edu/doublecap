@@ -74,18 +74,23 @@ int main(int argc, char *argv[]) {
     strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", localTime);
 
     G4String filename;
+    G4String index = "";
+
+    if (argc > 2) {
+        index = G4String("_") + G4String(argv[2]);
+    }
     
     switch (SIMULATIONMODE) {
         case 0:
-            filename = "test_data/testsim_" + G4String(buffer) + ".root";
+            filename = "test_data/testsim_" + G4String(buffer) + index + ".root";
             G4cout << "SIMULATION MODE 0: TEST" << G4endl;
             break;
         case 1:
-            filename = "rate_sim/simdata_" + G4String(buffer) + ".root";
+            filename = "rate_sim/simdata_" + G4String(buffer) + index + ".root";
             G4cout << "SIMULATION MODE 1: RATE SIMULATION" << G4endl;
             break;
         case 2:
-            filename = "capture_sim/simdata_" + G4String(buffer) + ".root";
+            filename = "capture_sim/simdata_" + G4String(buffer) + index + ".root";
             G4cout << "SIMULATION MODE 2: CAPTURE SIMULATION" << G4endl;
             break;
         default:
