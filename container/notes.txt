@@ -1,0 +1,15 @@
+
+# need for internet access
+module load WebProxy
+
+
+#Bootstrap: docker
+#From: ubuntu:22.04
+
+#Bootstrap: localimage
+#From: /Users/ajbiffl/Documents/CDMS/defects/images/ubuntu_22.04.sif
+
+FATAL:   While checking image: could not open image /home/ajbiffl3/soft/images/g4_env.sif: the image's architecture (arm64) could not run on the host's (amd64)
+
+
+
