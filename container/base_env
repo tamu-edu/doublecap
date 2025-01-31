@@ -1,5 +1,6 @@
 Bootstrap: docker
 From: ubuntu:22.04
+# apptainer build /tmp/lima/g4images/base_env.sif ../container/base_env
 
 %labels
     Author ajbiffl3@tamu.edu

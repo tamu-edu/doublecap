@@ -1,6 +1,6 @@
 Bootstrap: localimage
 From: /tmp/lima/g4images/root_env.sif
-
+# apptainer build /tmp/lima/g4images/g4_env.sif ../container/g4_env
 
 %post
 
