@@ -3,7 +3,7 @@
 /event/verbose 0
 /tracking/verbose 0
 
-/control/execute process_setup.mac
+/control/execute /home/ajbiffl3/soft/doublecap/build/process_setup.mac
 
 /run/beamOn 50000000
 
