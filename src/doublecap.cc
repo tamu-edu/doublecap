@@ -39,14 +39,14 @@
 #include "DCSensitiveDetector.hh"
 
 
-const G4bool RANDOMIZE = false; // set random seed for RNG
-const G4int NUMBEROFTHREADS = 1; // number of threads for MT mode
+const G4bool RANDOMIZE = true; // set random seed for RNG
+const G4int NUMBEROFTHREADS = 8; // number of threads for MT mode
 
 // simulation mode:
 // 0 = test source (0.1 eV neutrons at (0,0,0))
 // 1 = rate simulation (Cf source)
 // 2 = capture simulation (capture source)
-const G4int SIMULATIONMODE = 0; 
+const G4int SIMULATIONMODE = 1; 
 
 
 int main(int argc, char *argv[]) {
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     G4double spacing = 1.5*mm; // spacing between silicon detectors
 
     G4double pethickness = 5.*cm; // thickness of polyethylene between detector box and lead shield
-    G4double leadthickness = 10.*cm; // thickness (height) of lead shield
+    G4double leadthickness = 12.*cm; // thickness (height) of lead shield
     G4double leadradius = 3.*cm; // radius of cylindrical lead shield
     G4double sourcesize = 1.*mm; // side length of Cf cube
 
