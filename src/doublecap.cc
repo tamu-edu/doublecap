@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
             G4cout << "SIMULATION MODE 0: TEST" << G4endl;
             break;
         case 1:
-            filename = "capture_sim/simtest_" + G4String(buffer) + ".root";
+            filename = "rate_sim/simdata_" + G4String(buffer) + ".root";
             G4cout << "SIMULATION MODE 1: RATE SIMULATION" << G4endl;
             break;
         case 2:
