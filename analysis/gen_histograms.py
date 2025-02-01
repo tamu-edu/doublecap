@@ -67,7 +67,7 @@ Qs = ['NR', 'ER', 'Ep', 'Eq'] # recoil types; Ep = total phonon ER+NR, Eq = tota
 Ncaptures = {det: 0 for det in detectors} # number of neutron captures in each detector
 Nhits = {det: 0 for det in detectors} # total number of entries in trees
 
-ROOT.TH1.AddDirectory(false)
+ROOT.TH1.AddDirectory(False)
 
 # all hits
 # all_events[q][d] = histogram of events (true energy) of q recoils in detector d
@@ -94,7 +94,7 @@ coincidence_events = {detdet: {det: {Q: ROOT.TH1D(
 def get_evt_type(PName):
     if PName in 'e- e+ gamma proton alpha deuteron':
         return 'ER'
-    elif PName in 'P31 ' or PName[:2] in 'Si Al Mg Ge Ga As Se': 
+    elif PName in 'P31 ' or PName[:2] in 'Si Al Mg Ge Ga As Se Zn': 
         return 'NR'
     else:
         raise Exception('unknown PName = ' + PName + ', ProcName = ' + getattr(tree, 'ProcName'))
