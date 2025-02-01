@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
 
     G4cout << "sourcez = " << sourcez/cm << " cm" << G4endl;
 
-    runmgr->SetUserInitialization(factory->GetReferencePhysList("Shielding_HP"));
+    runmgr->SetUserInitialization(factory->GetReferencePhysList("Shielding_HPT"));
     runmgr->SetUserInitialization(new DCInitialization(Z, A, geometry, SIMULATIONMODE, filename));
     runmgr->SetUserInitialization(geometry);
 
