@@ -8,7 +8,7 @@ import os
 data_dir = '/scratch/user/ajbiffl3/doublecap/data/rate_sim/'
 output_dir = '/home/ajbiffl3/soft/doublecap/analysis/analysis_data/'
 
-default_num = 5e7
+default_num = 25e7
 
 primary_dict = {
     'simdata_20250131_145827': 5e7,
