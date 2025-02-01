@@ -65,7 +65,7 @@ codetectors = ['lowmassxhighmass1', 'lowmassxhighmass2', 'highmass1xhighmass2', 
 Qs = ['NR', 'ER', 'Ep', 'Eq'] # recoil types; Ep = total phonon ER+NR, Eq = total charge ER+Lindhard(NR)
 
 Ncaptures = {det: 0 for det in detectors} # number of neutron captures in each detector
-Nhits = {det: 0 for det in detectors} # total number of entries in trees
+Nevts = {det: 0 for det in detectors} # total number of entries in trees
 
 ROOT.TH1.AddDirectory(False)
 
@@ -155,7 +155,6 @@ for file in filenames:
 
         q = get_evt_type(PName)
 
-        Nhits[VolName] += 1
         if (ProcName == 'nCapture') and (ParentVol in detectors):
             Ncaptures[ParentVol] += 1
             if ParentVol == 'lowmass':
@@ -175,6 +174,9 @@ for file in filenames:
             co = ''
             if len(yes_hit) > 1:
                 co = 'x'.join(yes_hit)
+
+            for det in yes_hit:
+                Nevts[det] += 1
             
             # fill data into histograms
             # Edep_evt[det] holds the total energy [MeV] from the event
@@ -215,7 +217,7 @@ for file in filenames:
 
 
 for det in detectors:
-    print(f'{det}: {Nhits[det]:.3g} hits total, {Ncaptures[det]} capture events in {det}')
+    print(f'{det}: {Nevts[det]:.3g} hits total, {Ncaptures[det]} capture events in {det}')
 
 
 
