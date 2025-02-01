@@ -67,6 +67,7 @@ Qs = ['NR', 'ER', 'Ep', 'Eq'] # recoil types; Ep = total phonon ER+NR, Eq = tota
 Ncaptures = {det: 0 for det in detectors} # number of neutron captures in each detector
 Nhits = {det: 0 for det in detectors} # total number of entries in trees
 
+ROOT.TH1.AddDirectory(false)
 
 # all hits
 # all_events[q][d] = histogram of events (true energy) of q recoils in detector d
