@@ -7,7 +7,6 @@ import os
 
 
 data_dir = '/scratch/user/ajbiffl3/doublecap/data/rate_sim/'
-output_dir = '/home/ajbiffl3/soft/doublecap/analysis/analysis_data/'
 
 
 default_num = 25e7 # number of primaries per job, typically
@@ -16,8 +15,10 @@ default_num = 25e7 # number of primaries per job, typically
 primary_dict = {
     'simdata_20250131_145827': 5e7,
     'simdata_20250131_155936_0001': 5e7,
-    'simdata_20250131_155936_0002': 5e7
+    'simdata_20250131_155936_0002': 5e7,
+    'simdata_20250203_100526': 2e4,
 }
+
 
 data_files_found = {}
 filenames = os.listdir(data_dir)
@@ -61,23 +62,15 @@ def get_rates(*files):
     counts = {det: 0 for det in detectors}
     ncounts = {det: 0 for det in detectors}
 
-    if len(files) < 10:
-        tree_iter = lambda N: tqdm.trange(N)
-        file_iter = files
-    else:
-        tree_iter = lambda N: range(N)
-        file_iter = tqdm.tqdm(files)
-        
 
-
-    for file in file_iter:
+    for file in files:
         last_event = -1
         hits = {det: 0 for det in detectors}
-        tfile = ROOT.TFile.Open(file, 'READ')
+        tfile = ROOT.TFile.Open(data_dir + file, 'READ')
         tree = tfile.Get('tree')
         N = tree.GetEntries()
 
-        for k in tree_iter(N):
+        for k in range(N):
             tree.GetEntry(k)
             EventNum = int(getattr(tree, 'EventNum'))
             VolName = getattr(tree, 'VolName')
