@@ -18,7 +18,7 @@ public:
     void SetParticlePositionMomentum();
     void CalculateParams();
 private:
-    G4int verbosity = 0;
+    G4int verbosity = 3;
     DCGeometry *fGeometry;
     G4double sourcesize; // side length of source cube
     G4double sourcez;

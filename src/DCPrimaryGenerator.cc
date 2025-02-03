@@ -65,10 +65,18 @@ void DCPrimaryGenerator::SetParticlePositionMomentum() {
         gun->SetParticleMomentumDirection(RandomDirection()); 
         
     } else {
+        G4double q1 = G4UniformRand();
+        G4double q2 = G4UniformRand();
+        G4double q3 = G4UniformRand();
+        if (verbosity > 2) {
+            G4cout << "generated q1 = " << q1/mm << " mm" << G4endl;
+            G4cout << "generated q2 = " << q2/mm << " mm" << G4endl;
+            G4cout << "generated q3 = " << q3/mm << " mm" << G4endl;
+        }
         gun->SetParticlePosition( 
-            G4ThreeVector((G4UniformRand() - 0.5)*sourcesize,
-                        (G4UniformRand() - 0.5)*sourcesize,
-                        sourcez + (G4UniformRand() - 0.5)*sourcesize 
+            G4ThreeVector((q1 - 0.5)*sourcesize,
+                        (q2 - 0.5)*sourcesize,
+                        sourcez + (q3 - 0.5)*sourcesize 
         ));
     }
     if (verbosity > 1) {
