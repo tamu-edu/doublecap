@@ -217,7 +217,7 @@ for file in filenames:
 
 
 for det in detectors:
-    print(f'{det}: {Nevts[det]:.3g} hits total, {Ncaptures[det]} capture events in {det}')
+    print(f'{det}: {Nevts[det]:.3g} events total, {Ncaptures[det]} capture events in {det}')
 
 
 
