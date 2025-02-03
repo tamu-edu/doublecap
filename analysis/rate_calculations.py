@@ -19,6 +19,7 @@ primary_dict = {
     'simdata_20250131_155936_0002': 5e7
 }
 
+data_files_found = {}
 filenames = os.listdir(data_dir)
 
 Nprimaries = 0. # progressively add to this as more files read
