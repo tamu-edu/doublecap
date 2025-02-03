@@ -69,9 +69,9 @@ void DCPrimaryGenerator::SetParticlePositionMomentum() {
         G4double q2 = G4UniformRand();
         G4double q3 = G4UniformRand();
         if (verbosity > 2) {
-            G4cout << "generated q1 = " << q1/mm << " mm" << G4endl;
-            G4cout << "generated q2 = " << q2/mm << " mm" << G4endl;
-            G4cout << "generated q3 = " << q3/mm << " mm" << G4endl;
+            G4cout << "generated q1 = " << q1 << G4endl;
+            G4cout << "generated q2 = " << q2 << G4endl;
+            G4cout << "generated q3 = " << q3 << G4endl;
         }
         gun->SetParticlePosition( 
             G4ThreeVector((q1 - 0.5)*sourcesize,
