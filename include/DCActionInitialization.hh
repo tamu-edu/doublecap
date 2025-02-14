@@ -15,7 +15,7 @@
 
 class DCInitialization : public G4VUserActionInitialization {
 public:
-    DCInitialization(G4int, G4int, DCGeometry*, G4int, G4String);
+    DCInitialization(G4int, G4int, DCGeometry*, G4int, G4String, G4bool);
     ~DCInitialization() {;}
     void BuildForMaster() const override;
     void Build() const override;
@@ -25,6 +25,7 @@ private:
     DCGeometry *geometry;
     G4int mode;
     G4String filename;
+    G4bool fKillGammas;
 };
 
 
