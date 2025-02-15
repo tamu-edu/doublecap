@@ -62,7 +62,8 @@ private:
 
     // dimensions of world box
     G4double world_halfheight;
-    G4double world_halfwidth = 4.*cm;
+    G4double world_halfwidth = 10.*cm;
+    G4double world_pad = 5.*cm;
 
     G4LogicalVolume *worldLV;
     G4LogicalVolume *leadLV;

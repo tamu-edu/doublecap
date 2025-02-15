@@ -49,7 +49,7 @@ G4VPhysicalVolume* DCGeometry::Construct() {
 
     source = new SourceBlock(sourcesize, sourcez, worldLV);
 
-    ConstructShield();
+    //ConstructShield();
 
     SetVisAttributes();
 
@@ -69,7 +69,7 @@ void DCGeometry::ComputeParams() {
     leadz = box_halfheight + cu_thick + pethickness + leadthickness/2.;
     sourcez = leadz + leadthickness/2. + sourcesize/2. + 100.*nm;
 
-    world_halfheight = sourcez + sourcesize/2. + 100.*nm;
+    world_halfheight = sourcez + sourcesize/2. + 100.*nm + world_pad;
 
     if (verbosity > 0) {
         G4cout << "DCGeometry: parameters computed." << G4endl;
@@ -109,7 +109,7 @@ void DCGeometry::SetVisAttributes() {
     detector->GetCopper()->SetVisAttributes(G4VisAttributes(copperColor));
     detector->GetAirgap()->SetVisAttributes(G4VisAttributes(copperColor));
     source->GetBlock()->SetVisAttributes(G4VisAttributes(sourceColor));
-    leadLV->SetVisAttributes(G4VisAttributes(leadColor));
+    //leadLV->SetVisAttributes(G4VisAttributes(leadColor));
 }
 
 void DCGeometry::ConstructShield() {
