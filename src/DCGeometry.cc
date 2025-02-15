@@ -49,7 +49,7 @@ G4VPhysicalVolume* DCGeometry::Construct() {
 
     source = new SourceBlock(sourcesize, sourcez, worldLV);
 
-    //ConstructShield();
+    ConstructShield();
 
     SetVisAttributes();
 
@@ -109,7 +109,7 @@ void DCGeometry::SetVisAttributes() {
     detector->GetCopper()->SetVisAttributes(G4VisAttributes(copperColor));
     detector->GetAirgap()->SetVisAttributes(G4VisAttributes(copperColor));
     source->GetBlock()->SetVisAttributes(G4VisAttributes(sourceColor));
-    //leadLV->SetVisAttributes(G4VisAttributes(leadColor));
+    leadLV->SetVisAttributes(G4VisAttributes(leadColor));
 }
 
 void DCGeometry::ConstructShield() {
