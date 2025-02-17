@@ -2,11 +2,11 @@
 
 ## JOB SPECIFICATIONS
 #SBATCH --job-name=doublecap_prod
-#SBATCH --time=05:00:00
+#SBATCH --time=02:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=250G
-#SBATCH --array=1-40
+#SBATCH --mem=100G
+#SBATCH --array=1-20
 #SBATCH --output=/scratch/user/ajbiffl3/doublecap/logs/slurm_output_%a.%j
 
 
