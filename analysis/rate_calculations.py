@@ -109,3 +109,20 @@ print(counts)
 print('ncounts:')
 print(ncounts)
 
+"""
+simdata_20250203_100526 : numfiles = 1
+total 1e+10 primaries
+270.3 seconds exposure time
+lowmass: 0.006379 kHz (1.72e+03 counts)
+    captures: 0 Hz (0 counts)
+highmass1: 5.863 kHz (1.58e+06 counts)
+    captures: 479.2 Hz (1.3e+05 counts)
+highmass2: 3.39 kHz (9.16e+05 counts)
+    captures: 218.6 Hz (5.91e+04 counts)
+counts:
+{'lowmass': 1724, 'highmass1': 1584493, 'highmass2': 916217}
+ncounts:
+{'lowmass': 0, 'highmass1': 129502, 'highmass2': 59077}
+
+"""
+
