@@ -18,5 +18,9 @@ SIMDIR="/scratch/user/ajbiffl3/doublecap"
 LOGFILENAME="${SIMDIR}/logs/output_${SLURM_ARRAY_TASK_ID}.log"
 IMAGE="/home/ajbiffl3/soft/images/g4_env.sif"
 
-srun --output=${LOGFILENAME} singularity exec -B /home/ajbiffl3/soft,/scratch/user/ajbiffl3 $IMAGE bash /home/ajbiffl3/soft/doublecap/build/run_production_job.sh ${SLURM_ARRAY_TASK_ID}
+PB=$1
+PE=$2
+KILLGAMMAS=$3
+
+srun --output=${LOGFILENAME} singularity exec -B /home/ajbiffl3/soft,/scratch/user/ajbiffl3 $IMAGE bash /home/ajbiffl3/soft/doublecap/build/run_production_job.sh ${SLURM_ARRAY_TASK_ID} ${PB} ${PE} ${KILLGAMMAS} ${SLURM_CPUS_PER_TASK}
 
