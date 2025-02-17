@@ -3,9 +3,9 @@
 /event/verbose 0
 /tracking/verbose 0
 
-/control/execute /home/ajbiffl3/soft/doublecap/build/process_setup.mac
+/control/execute process_setup.mac
 
-/run/beamOn 50000000
+/run/beamOn 100000000
 
 # assume everything else had 50,000,000
 
