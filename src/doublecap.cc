@@ -156,6 +156,7 @@ int main(int argc, char *argv[]) {
     }
 
     G4cout << "KILLGAMMAS = " << KILLGAMMAS << G4endl;
+    G4cout << "NUMBEROFTHREADS = " << NUMBEROFTHREADS << G4endl;
     G4cout << "output_dir: " << output_dir << G4endl;
     G4cout << "index: " << index << G4endl;
     G4cout << "macro_path: " << macro_path << G4endl;
