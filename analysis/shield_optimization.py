@@ -20,7 +20,7 @@ class ShieldOptimization:
 
     _mCu = 37000000 # one millicurie in Bq
 
-    def __init__(self, match = 'Lead*_PE*_????????_??????_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu):
+    def __init__(self, match = 'Lead*_PE*_*_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu):
 
         self.match = match
         self.dir = folder
