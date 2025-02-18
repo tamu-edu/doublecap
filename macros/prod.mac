@@ -5,7 +5,7 @@
 
 /control/execute process_setup.mac
 
-/run/beamOn 100000000
+/run/beamOn 250000000
 
 # assume everything else had 50,000,000
 
