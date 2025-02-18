@@ -6,7 +6,7 @@ from shield_optimization import ShieldOptimization
 
 if __name__ == '__main__':
 
-    data_folder = '/scratch/user/ajbiffl3/doublecap/data/shield_sim'
+    data_folder = '/scratch/user/ajbiffl3/doublecap/data/shield_sim/'
 
     opt = ShieldOptimization(folder = data_folder, Ndefault = 2.5e8)
     opt.analyze()
