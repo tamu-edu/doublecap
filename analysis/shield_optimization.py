@@ -20,12 +20,14 @@ class ShieldOptimization:
 
     _mCu = 37000000 # one millicurie in Bq
 
-    def __init__(self, match = 'Lead*_PE*_*_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu):
+    def __init__(self, match = 'Lead*_PE*_*_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu, verbose = 1):
+        self.verbosity = verbose
 
         self.match = match
         self.dir = folder
         self.glob_list = _glob.glob(self.dir + self.match)
         self.filename_list = [path.split('/')[-1] for path in self.glob_list]
+        self.N = len(self.filename_list)
 
         self.default_Nprimaries = Ndefault
 
@@ -58,6 +60,9 @@ class ShieldOptimization:
         - add file information (lead thickness, poly thickness, timestamp, etc) to lists
         - collect file "bases" (core of filename corresponding to single run with multiple threads) into dictionary
         """
+
+        if self.verbosity > 0:
+            print(f'collecting {self.N} files')
 
         self.leads = []
         self.polys = []
@@ -177,6 +182,9 @@ class ShieldOptimization:
             self.count_list.append(cts)
             self.rate_list.append(rt)
             self.exposure_time_list.append(time)
+            if i%(self.N//10) == 0 and self.verbosity > 2:
+                print(f'{i+1}/{self.N} done')
+
 
 
     def collect_rates(self):
