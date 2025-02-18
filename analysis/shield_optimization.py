@@ -184,6 +184,7 @@ class ShieldOptimization:
         calculate rates for specified event types for specific measurements
         """
         self.rates = {meas: _np.zeros((3,2)) for meas in self.measurements_list}
+        self.drates = {meas: _np.zeros((3,2)) for meas in self.measurements_list}
         self.totals = {meas: _np.zeros((3,2)) for meas in self.measurements_list}
         self.total_exposure = {meas: 0 for meas in self.measurements_list}
 
@@ -193,19 +194,25 @@ class ShieldOptimization:
 
         for meas in self.measurements_list:
             self.rates[meas] = self.totals[meas]/self.total_exposure[meas]
+            self.drates[meas] = _np.sqrt(self.totals[meas])/self.total_exposure[meas]
 
 
     def get_rate(self, lead, poly, det = 'lowmass', proc = 'nCapture'):
         return self.rates[(lead,poly)][self.rates_accessor[det][proc]]
+
+    def get_drate(self, lead, poly, det = 'lowmass', proc = 'nCapture'):
+        return self.drates[(lead,poly)][self.rates_accessor[det][proc]]
 
 
     def get_capture_rate(self):
         lead = []
         poly = []
         rate = []
+        drate = []
         for l,p in self.measurements_list:
             lead.append(l)
             poly.append(p)
             rate.append(self.rates[(l,p)][(2,1)])
+            drate.append(self.drates[(l,p)][(2,1)])
 
-        return _np.array(lead), _np.array(poly), _np.array(rate)
+        return _np.array(lead), _np.array(poly), _np.array(rate), _np.array(drate)
