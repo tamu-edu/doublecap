@@ -3,7 +3,7 @@
 source /home/ajbiffl3/soft/doublecap/build/singularity_setup.sh
 
 export BUILDDIR="/home/ajbiffl3/soft/doublecap/build"
-export OUTPUTDIR="/scratch/user/ajbiffl3/doublecap/data/"
+export OUTPUTDIR="/scratch/user/ajbiffl3/doublecap/data"
 
 INDEX=$(printf "%04d" $1)
 PB=$2
