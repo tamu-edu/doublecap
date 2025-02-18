@@ -11,5 +11,5 @@ PE=$3
 KILLGAMMAS=$4
 NTHREADS=$5
 
-${BUILDDIR}/doublecap prod.mac -s 1 -r 1 -k -n 8 $KILLGAMMAS -m $BUILDDIR -i $INDEX -o $OUTPUTDIR -l $PB -p $PE -n $NTHREADS
+${BUILDDIR}/doublecap prod.mac -s 1 -r 1 -k $KILLGAMMAS -n $NTHREADS -m $BUILDDIR -i $INDEX -o $OUTPUTDIR -l $PB -p $PE -n $NTHREADS
 
