@@ -20,8 +20,9 @@ class ShieldOptimization:
 
     _mCu = 37000000 # one millicurie in Bq
 
-    def __init__(self, match = 'Lead*_PE*_*_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu, verbose = 1):
+    def __init__(self, match = 'Lead*_PE*_*_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu, verbose = 1, part = 100):
         self.verbosity = verbose
+        self.part = part
 
         self.match = match
         self.dir = folder
@@ -182,7 +183,7 @@ class ShieldOptimization:
             self.count_list.append(cts)
             self.rate_list.append(rt)
             self.exposure_time_list.append(time)
-            if i%(self.N//10) == 0 and self.verbosity > 2:
+            if i%(self.N//self.part) == 0 and self.verbosity > 2:
                 print(f'{i+1}/{self.N} done')
 
 
