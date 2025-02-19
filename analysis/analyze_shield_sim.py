@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     data_folder = '/scratch/user/ajbiffl3/doublecap/data/shield_sim/'
 
-    opt = ShieldOptimization(folder = data_folder, Ndefault = 2.5e8, verbose = 2)
+    opt = ShieldOptimization(folder = data_folder, Ndefault = 2.5e8, verbose = 3, part = 100)
     opt.analyze()
     print(opt.rates)
 
