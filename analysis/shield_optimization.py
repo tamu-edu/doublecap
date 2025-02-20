@@ -20,7 +20,7 @@ class ShieldOptimization:
 
     _mCu = 37000000 # one millicurie in Bq
 
-    def __init__(self, match = 'Lead*_PE*_*_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu, verbose = 1, part = 100):
+    def __init__(self, match = 'Lead*_PE*_*_t?.root', folder = '../build/shield_sim/', Ndefault = 1e8, activity = _mCu, verbose = 1, part = 10):
         self.verbosity = verbose
         self.part = part
 
@@ -82,6 +82,8 @@ class ShieldOptimization:
             comps = file.split('_')
             if 'Lead' in comps[0]:
                 lead = float(comps[0][4:])
+            elif 'Air' in comps[0]:
+                lead = float(comps[0][3:])
             else:
                 print('problem with ' + file + ': no lead')
 
