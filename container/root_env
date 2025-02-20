@@ -1,6 +1,6 @@
 Bootstrap: localimage
-From: /tmp/lima/g4images/base_env.sif
-# apptainer build /tmp/lima/g4images/root_env.sif ../container/root_env
+From: /Users/ajbiffl/Documents/CDMS/defects/doublecap/container/build/base_env.sif
+# apptainer build /Users/ajbiffl/Documents/CDMS/defects/doublecap/container/build/root_env.sif root_env
 
 %post
 
