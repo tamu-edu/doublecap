@@ -45,6 +45,9 @@ int main(int argc, char *argv[]) {
 
     command line arguments
 
+    -f folder
+        folder name under output directory to place file. If empty or "default", default depends on simulation mode (0 - "test_data", 1 - "rate_sim", 2 - "capture_sim")
+
     -i  idx
         ID or index number of filename, appended after timestamp to denote multiple runs started at the same time
 
@@ -78,6 +81,7 @@ int main(int argc, char *argv[]) {
     
     G4String argval;
     G4String filename;
+    G4String folder = "default";
     G4String index = "";
     G4bool add_macro_path = false;
     G4String macro_path;
@@ -99,12 +103,21 @@ int main(int argc, char *argv[]) {
                 argval = G4String(argv[arg_idx+1]);
 
                 switch (argv[arg_idx][1]) {
-                    case 'o': // /output/dir
-                    output_dir = argval + "/";
+
+                    case 'f': // folder
+                        folder = argval;
                         break;
 
                     case 'i': // idx
                         index = G4String("_") + argval;
+                        break;
+
+                    case 'k': // kill-gammas
+                        KILLGAMMAS = (argval != "0");
+                        break;
+
+                    case 'l': // Pb-thickness
+                        leadthickness = atof(argv[arg_idx+1])*cm;
                         break;
                         
                     case 'm': // /macro/path
@@ -112,20 +125,16 @@ int main(int argc, char *argv[]) {
                         macro_path = argval;
                         break;
 
-                    case 'l': // Pb-thickness
-                        leadthickness = atof(argv[arg_idx+1])*cm;
+                    case 'n': //number-of-threads
+                        NUMBEROFTHREADS = atoi(argv[arg_idx+1]);
+                        break;
+
+                    case 'o': // /output/dir
+                    output_dir = argval + "/";
                         break;
 
                     case 'p': // PE-thickness
                         pethickness = atof(argv[arg_idx+1])*cm;
-                        break;
-
-                    case 'k': // kill-gammas
-                        KILLGAMMAS = (argval != "0");
-                        break;
-
-                    case 'n': //number-of-threads
-                        NUMBEROFTHREADS = atoi(argv[arg_idx+1]);
                         break;
 
                     case 'r': // randomize
@@ -158,6 +167,7 @@ int main(int argc, char *argv[]) {
     G4cout << "KILLGAMMAS = " << KILLGAMMAS << G4endl;
     G4cout << "NUMBEROFTHREADS = " << NUMBEROFTHREADS << G4endl;
     G4cout << "output_dir: " << output_dir << G4endl;
+    G4cout << "folder: " << folder << G4endl;
     G4cout << "index: " << index << G4endl;
     G4cout << "macro_path: " << macro_path << G4endl;
     G4cout << "leadthickness = " << leadthickness/cm << " cm" << G4endl; 
@@ -173,16 +183,19 @@ int main(int argc, char *argv[]) {
 
     switch (SIMULATIONMODE) {
         case 0:
-            filename = output_dir + "test_data/testsim_" + G4String(buffer) + index + ".root";
+            if (folder == "default") {folder = "test_data";}
+            filename = output_dir + folder + "/testsim_" + G4String(buffer) + index + ".root";
             G4cout << "SIMULATION MODE 0: TEST" << G4endl;
             break;
         case 1:
-            title_prefix = G4String("Lead") + G4String(to_string(G4int(leadthickness/cm))) + G4String("_PE") + G4String(to_string(G4int(pethickness/cm))) + G4String("_");
-            filename = output_dir + "shield_sim/" + title_prefix + G4String(buffer) + index + ".root";
+            if (folder == "default") {folder = "rate_sim";}
+            title_prefix = G4String("Lead") + G4String(to_string(leadthickness/cm)) + G4String("_PE") + G4String(to_string(pethickness/cm)) + G4String("_");
+            filename = output_dir + folder + "/" + title_prefix + G4String(buffer) + index + ".root";
             G4cout << "SIMULATION MODE 1: RATE SIMULATION" << G4endl;
             break;
         case 2:
-            filename = output_dir + "capture_sim/simdata_" + G4String(buffer) + index + ".root";
+            if (folder == "default") {folder = "capture_sim";}
+            filename = output_dir + folder + "/simdata_" + G4String(buffer) + index + ".root";
             G4cout << "SIMULATION MODE 2: CAPTURE SIMULATION" << G4endl;
             break;
         default:
@@ -198,7 +211,8 @@ int main(int argc, char *argv[]) {
 
     // geometry
     G4double lm_face = 1.*cm; // width of lowmass
-    G4double lm_thick = 1.*mm; // thickness of lowmass
+    G4double lm_thick = 4.*mm; // thickness of lowmass 
+    // changed to 4 mm 20250226_114500
 
     G4double hm_diameter = 7.5*cm; // diameter of highmasses
     G4double hm_thick = 2.5*cm; // thickness of highmasses
