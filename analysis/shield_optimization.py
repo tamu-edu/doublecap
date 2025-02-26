@@ -227,3 +227,52 @@ class ShieldOptimization:
             drate.append(self.drates[(l,p)][(2,1)])
 
         return _np.array(lead), _np.array(poly), _np.array(rate), _np.array(drate)
+
+
+class BackgroundRates(ShieldOptimization):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.processes = ['all', 'nCapture']
+
+
+    def calculate_rate(self, i):
+        """
+        calculate rates of hadElastic/nCapture in highmass1/highmass2/lowmass in the file at the specified index i
+
+        returns 3x2 array (rows hm1/hm2/hm3, columns hadElastic/nCapture)
+        """
+        time = self.exposure_time(self.primaries[i])
+        Nevts = _np.zeros((3,2))
+
+        tfile = _ROOT.TFile.Open(self.glob_list[i], 'READ')
+        tree = tfile.Get('tree')
+        N = tree.GetEntries()
+
+        last_event = -1
+        hit = _np.zeros((3,2))
+
+        for k in range(N):
+            tree.GetEntry(k)
+            EventNum = int(getattr(tree, 'EventNum'))
+            VolName = getattr(tree, 'VolName')
+            ProcName = getattr(tree, 'ProcName')
+
+            if abs(EventNum - last_event) > 1e-6: # new event
+
+                Nevts += hit
+                hit = _np.zeros((3,2))
+                last_event = EventNum
+
+            for i, volname in enumerate(self.detectors):
+                if VolName == volname:
+                    hit[i,0] = 1
+                    if ProcName == 'nCapture':
+                        hit[i,1] = 1
+
+        tfile.Close()
+
+        rate = Nevts/time
+
+        return Nevts, rate, time
+
