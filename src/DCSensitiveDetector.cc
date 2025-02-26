@@ -72,6 +72,12 @@ G4bool DCSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* histor
 
     fAnalysisMgr->FillNtupleDColumn(0, 11, step->GetPostStepPoint()->GetGlobalTime());
 
+    G4ThreeVector pos = step->GetPostStepPoint()->GetPosition();
+
+    fAnalysisMgr->FillNtupleDColumn(0, 12, pos.getX());
+    fAnalysisMgr->FillNtupleDColumn(0, 13, pos.getY());
+    fAnalysisMgr->FillNtupleDColumn(0, 14, pos.getZ());
+
     fAnalysisMgr->AddNtupleRow();
 
     //G4cout << "Ending ProcessHits" << G4endl;

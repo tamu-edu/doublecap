@@ -32,6 +32,9 @@ DCRunAction::DCRunAction(G4String fname) : filename(fname) {
     analysismgr->CreateNtupleDColumn("KE3");
     analysismgr->CreateNtupleSColumn("DepProc");
     analysismgr->CreateNtupleDColumn("Time");
+    analysismgr->CreateNtupleDColumn("X");
+    analysismgr->CreateNtupleDColumn("Y");
+    analysismgr->CreateNtupleDColumn("Z");
     analysismgr->FinishNtuple();
 
     if (verbosity > 0) {
