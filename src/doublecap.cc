@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
         Path to output directory, e.g., for simulation mode zero, output file names will be "/output/dir/test_data/testsim_XXXXXX_XXXXXX_XXXX_tX.root"
 
     -p PE-thickness
-        thickness (cm) of polyethylene between source and detector box (default 10 cm)
+        thickness (cm) of polyethylene between source and detector box (default 1 cm)
 
     -r  randomize
         integer flag, whether or not to set random state with new random seed (default 1)
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     G4int NUMBEROFTHREADS = 8;
     G4int SIMULATIONMODE = 1; 
     G4double leadthickness = 10.*cm; // thickness (height) of lead shield
-    G4double pethickness = 5.*cm; // thickness of polyethylene between detector box and lead shield
+    G4double pethickness = 1.*cm; // thickness of polyethylene between detector box and lead shield
 
     if (argc > 2) { // extra command line arguments
         G4int arg_idx = 2;
