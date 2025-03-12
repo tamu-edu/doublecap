@@ -240,7 +240,7 @@ class BackgroundRates(ShieldOptimization):
         """
         calculate rates of hadElastic/nCapture in highmass1/highmass2/lowmass in the file at the specified index i
 
-        returns 3x2 array (rows hm1/hm2/hm3, columns hadElastic/nCapture)
+        returns 3x2 array (rows hm1/hm2/hm3, columns total/nCapture)
         """
         time = self.exposure_time(self.primaries[i])
         Nevts = _np.zeros((3,2))
@@ -256,6 +256,7 @@ class BackgroundRates(ShieldOptimization):
             tree.GetEntry(k)
             EventNum = int(getattr(tree, 'EventNum'))
             VolName = getattr(tree, 'VolName')
+            ParentVol = getattr(tree, 'ParentVol')
             ProcName = getattr(tree, 'ProcName')
 
             if abs(EventNum - last_event) > 1e-6: # new event
@@ -267,7 +268,7 @@ class BackgroundRates(ShieldOptimization):
             for i, volname in enumerate(self.detectors):
                 if VolName == volname:
                     hit[i,0] = 1
-                    if ProcName == 'nCapture':
+                    if ProcName == 'nCapture' and VolName == ParentVol:
                         hit[i,1] = 1
 
         tfile.Close()
