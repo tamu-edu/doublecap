@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
         integer flag to specify whether or not to kill gammas, e-, and e+ (default 0)
 
     -l Pb-thickness
-        thickness (cm) of lead shield between source and detector box (default 5 cm)
+        thickness (cm) of lead shield between source and detector box (default 20 cm)
 
     -m  /macro/path
         Path to macro files (all macro files should be given just as titles and this argument should be specified)
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
     G4bool RANDOMIZE = true;
     G4int NUMBEROFTHREADS = 8;
     G4int SIMULATIONMODE = 1; 
-    G4double leadthickness = 10.*cm; // thickness (height) of lead shield
+    G4double leadthickness = 20.*cm; // thickness (height) of lead shield
     G4double pethickness = 1.*cm; // thickness of polyethylene between detector box and lead shield
 
     if (argc > 2) { // extra command line arguments
