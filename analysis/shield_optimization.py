@@ -48,11 +48,17 @@ class ShieldOptimization:
         """
         do all the main analysis steps
         """
+        self.pre_analyze()
+        self.read_rates()
+        self.collect_rates()
+
+
+    def pre_analyze(self):
         self.collect_files()
         self.calculate_primaries()
         self.assign_primaries()
-        self.read_rates()
-        self.collect_rates()
+        self.get_exposure_times()
+
 
     
     def collect_files(self):
@@ -172,22 +178,34 @@ class ShieldOptimization:
         return Nevts, rate, time
 
 
+    def get_exposure_times(self):
+        """
+        prepare rate data lists
+        """
+        self.exposure_time_list = []
+
+        for i in range(self.N):
+            time = self.exposure_time(self.primaries[i])
+            self.exposure_time_list.append(time)
+
+        self.meas_exposures = {meas: 0 for meas in self.measurements_list}
+        for i in range(self.N):
+            self.meas_exposures[self.measurements[i]] += self.exposure_time_list[i]
+
+
     def read_rates(self):
         """
-        read rate data in from all files
+        prepare rate data lists
         """
         self.rate_list = []
         self.count_list = []
-        self.exposure_time_list = []
 
         for i in range(len(self.filename_list)):
             cts, rt, time = self.calculate_rate(i)
             self.count_list.append(cts)
             self.rate_list.append(rt)
-            self.exposure_time_list.append(time)
             if i%(self.N//self.part) == 0 and self.verbosity > 2:
                 print(f'{i+1}/{self.N} done')
-
 
 
     def collect_rates(self):
