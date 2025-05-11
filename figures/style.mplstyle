@@ -1,0 +1,30 @@
+
+lines.linewidth : 2
+
+#ticks
+xtick.top : False
+xtick.bottom : True
+xtick.minor.visible : True
+xtick.direction : in
+xtick.major.size : 5
+xtick.minor.size : 2
+xtick.major.width : 1
+xtick.minor.width : 1
+xtick.labelsize : 12
+
+ytick.left : True
+ytick.right : False
+ytick.minor.visible : True
+ytick.direction : in
+ytick.major.size : 5
+ytick.minor.size : 2
+ytick.major.width : 1
+ytick.minor.width : 1
+ytick.labelsize : 12
+
+
+axes.labelsize : 15
+axes.titlesize : 17
+
+legend.fontsize : 12
+
