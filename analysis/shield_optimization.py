@@ -158,6 +158,7 @@ class ShieldOptimization:
             EventNum = int(getattr(tree, 'EventNum'))
             VolName = getattr(tree, 'VolName')
             ProcName = getattr(tree, 'ProcName')
+            Time = float(getattr(tree, 'Time'))
 
             if abs(EventNum - last_event) > 1e-6: # new event
 
@@ -165,10 +166,11 @@ class ShieldOptimization:
                 hit = _np.zeros((3,2))
                 last_event = EventNum
 
-            for i, volname in enumerate(self.detectors):
-                for j, procname in enumerate(self.processes):
-                    if VolName == volname and ProcName == procname:
-                        hit[i,j] = 1
+            if (Time < 1e9*360*24*365*100):
+                for i, volname in enumerate(self.detectors):
+                    for j, procname in enumerate(self.processes):
+                        if VolName == volname and ProcName == procname:
+                            hit[i,j] = 1
                         
 
         tfile.Close()
@@ -276,6 +278,7 @@ class BackgroundRates(ShieldOptimization):
             VolName = getattr(tree, 'VolName')
             ParentVol = getattr(tree, 'ParentVol')
             ProcName = getattr(tree, 'ProcName')
+            Time = float(getattr(tree, 'Time'))
 
             if abs(EventNum - last_event) > 1e-6: # new event
 
@@ -283,11 +286,12 @@ class BackgroundRates(ShieldOptimization):
                 hit = _np.zeros((3,2))
                 last_event = EventNum
 
-            for i, volname in enumerate(self.detectors):
-                if VolName == volname:
-                    hit[i,0] = 1
-                    if ProcName == 'nCapture' and VolName == ParentVol:
-                        hit[i,1] = 1
+            if (Time < 1e9*360*24*365*100):
+                for i, volname in enumerate(self.detectors):
+                    if VolName == volname:
+                        hit[i,0] = 1
+                        if ProcName == 'nCapture' and VolName == ParentVol:
+                            hit[i,1] = 1
 
         tfile.Close()
 
