@@ -77,6 +77,7 @@ int main(int argc, char *argv[]) {
         - 0 = test source (0.1 eV neutrons at (0,0,0))
         - 1 = rate simulation (Cf source)
         - 2 = capture simulation (capture source)
+        - 3 = neutron gun (particle source with just 2-MeV gammas)
     */
     
     G4String argval;
@@ -94,7 +95,7 @@ int main(int argc, char *argv[]) {
     G4double pethickness = 1.*cm; // thickness of polyethylene between detector box and lead shield
 
     if (argc > 2) { // extra command line arguments
-        G4int arg_idx = 2;
+        G4int arg_idx = 1;
 
         while (arg_idx < argc) {
 
@@ -198,6 +199,12 @@ int main(int argc, char *argv[]) {
             filename = output_dir + folder + "/simdata_" + G4String(buffer) + index + ".root";
             G4cout << "SIMULATION MODE 2: CAPTURE SIMULATION" << G4endl;
             break;
+        case 3:
+            // ./doublecap vis100.mac -n 1 -s 3
+            if (folder == "default") {folder = "neutron_sim";}
+            filename = output_dir + folder + "/neutronHPT_" + G4String(buffer) + index + ".root";
+            G4cout << "SIMULATION MODE 3: NEUTRON SIMULATION" << G4endl;
+            break;
         default:
             G4cerr << "Error. Unknown simulation mode." << G4endl;
             return 1;
@@ -225,7 +232,6 @@ int main(int argc, char *argv[]) {
     G4double sourcesize = 1.*mm; // side length of Cf cube
 
     G4int Z = 98, A = 252; // Cf-252 calibration source
-    //G4int Z = 0, A = 0; // generic neutron source
 
     DCGeometry *geometry = new DCGeometry(lm_face, lm_thick, hm_diameter, hm_thick, cu_thick, spacing, airgap, pethickness, leadthickness, leadradius, sourcesize);
 
@@ -256,7 +262,7 @@ int main(int argc, char *argv[]) {
         G4String command = "/control/macroPath ";
         UImanager->ApplyCommand(command + macro_path);
     }
-    if (argc > 1) {
+    if ((argc > 1) && (argv[1][0] != '-')) {
         G4String macro = argv[1];
         G4String command = "/control/execute ";
         UImanager->ApplyCommand(command + macro);

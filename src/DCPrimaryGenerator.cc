@@ -36,7 +36,8 @@ void DCPrimaryGenerator::GetParticleDefinition() {
     G4double en;
     if (Z == 0 && A == 0) {
         fParticle = G4ParticleTable::GetParticleTable()->FindParticle("neutron");
-        en = 0.05*eV;
+        //en = 0.05*eV;
+        en = 2.*MeV;
         if (verbosity > 1) {
             G4cout << "setting particle to neutron" << G4endl;
         }
@@ -49,6 +50,7 @@ void DCPrimaryGenerator::GetParticleDefinition() {
     }
     gun->SetParticleDefinition(fParticle);
     gun->SetParticleEnergy(en);
+    gun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,-1.));
     if (verbosity > 1) {
         G4cout << "DCPrimaryGenerator finished assigning particle" << G4endl;
     }
@@ -59,26 +61,21 @@ void DCPrimaryGenerator::SetParticlePositionMomentum() {
         G4cout << "Starting DCPrimaryGenerator::SetParticlePositionMomentum" << G4endl;
     }
 
-    if (Z == 0 && A == 0) { // particle = neutron: randomize direction but not position
-        
-        gun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
-        gun->SetParticleMomentumDirection(RandomDirection()); 
-        
-    } else {
-        G4double q1 = G4UniformRand();
-        G4double q2 = G4UniformRand();
-        G4double q3 = G4UniformRand();
-        if (verbosity > 2) {
-            G4cout << "generated q1 = " << q1 << G4endl;
-            G4cout << "generated q2 = " << q2 << G4endl;
-            G4cout << "generated q3 = " << q3 << G4endl;
-        }
-        gun->SetParticlePosition( 
-            G4ThreeVector((q1 - 0.5)*sourcesize,
-                        (q2 - 0.5)*sourcesize,
-                        sourcez + (q3 - 0.5)*sourcesize 
-        ));
+    G4double q1 = G4UniformRand();
+    G4double q2 = G4UniformRand();
+    G4double q3 = G4UniformRand();
+    if (verbosity > 4) {
+        G4cout << "generated q1 = " << q1 << G4endl;
+        G4cout << "generated q2 = " << q2 << G4endl;
+        G4cout << "generated q3 = " << q3 << G4endl;
     }
+    gun->SetParticlePosition( 
+        G4ThreeVector(
+            (q1 - 0.5)*sourcesize,
+            (q2 - 0.5)*sourcesize,
+            (q3 - 0.5)*sourcesize + sourcez
+    ));
+
     if (verbosity > 1) {
         G4cout << "Ending DCPrimaryGenerator::SetParticlePositionMomentum" << G4endl;
     }

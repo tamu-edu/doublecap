@@ -41,6 +41,9 @@ void DCInitialization::Build() const {
         case 2:
             SetUserAction(new CaptureGenerator(geometry));
             break;
+        case 3:
+            SetUserAction(new DCPrimaryGenerator(0, 0, geometry));
+            break;
         default:
             G4cerr << "Simulation mode not recognized. This will probably not go well." << G4endl;
     }
