@@ -19,7 +19,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # 17 used for Geant 4-11.1-release
 set(CMAKE_CXX_STANDARD 17) 
 
-option(IGNORE_WARNINGS "Ignore all warnings with -w flag" ON)
+# required for newest Geant4 build apparently
+set(CMAKE_OSX_DEPLOYMENT_TARGET 15.0)
+
+option(IGNORE_WARNINGS "Ignore all warnings with -w flag" OFF)
 if (IGNORE_WARNINGS)
 	add_definitions(-w)
 	message(WARNING "Ignoring all warnings")
